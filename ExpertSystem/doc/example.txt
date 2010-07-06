@@ -1,182 +1,0 @@
-Start
-  Program
-    VariableDeclaration
-      VariableList
-      VariableList
-    FactDeclaration
-      ListOfFacts
-        Fact
-          Identifier: a
-          ThenRelationalOperator: >
-          ThenExpression
-            ThenSimpleExpression
-              ThenTerm
-                ThenFactor
-                  Constant: 10
-                ThenMoreTerms
-              ThenMoreSimpleExpression
-        ListOfFacts
-          Fact
-            Identifier: n
-            ThenRelationalOperator: =
-            ThenExpression
-              ThenSimpleExpression
-                ThenTerm
-                  ThenFactor
-                    Constant: 15
-                  ThenMoreTerms
-                ThenMoreSimpleExpression
-    RuleDeclaration
-      ListOfRules
-        Rule
-          DecisionStatement
-            IfScope
-              IfExpression
-                IfSimpleExpression
-                  IfTerm
-                    IfFactor
-                      Constant: a
-                        Identifier: a
-                    IfMoreTerms
-                  IfMoreSimpleExpression
-                IfRelationalOperator: >
-                IfExpression
-                  IfSimpleExpression
-                    IfTerm
-                      IfFactor
-                        Constant: c
-                          Identifier: c
-                      IfMoreTerms
-                    IfMoreSimpleExpression
-            ThenScope
-              ConclusionList
-                Conclusion
-                  ThenAttribution
-                    Identifier: h
-                    ThenExpression
-                      ThenSimpleExpression
-                        ThenTerm
-                          ThenFactor
-                            Constant: 123
-                          ThenMoreTerms
-                        ThenMoreSimpleExpression
-                Conclusion
-                  ThenAttribution
-                    Identifier: h
-                    ThenExpression
-                      ThenSimpleExpression
-                        ThenTerm
-                          ThenFactor
-                            Constant: "or"
-                          ThenMoreTerms
-                        ThenMoreSimpleExpression
-                Conclusion
-                  ThenAttribution
-                    Identifier: a
-                    Identifier: hoi
-                    ThenExpression
-                      ThenSimpleExpression
-                        ThenTerm
-                          ThenFactor
-                            Constant: 154
-                          ThenMoreTerms
-                        ThenMoreSimpleExpression
-        Rule
-          DecisionStatement
-            IfScope
-              IfExpression
-                IfSimpleExpression
-                  IfTerm
-                    IfFactor
-                      IfExpression
-                        IfSimpleExpression
-                          IfTerm
-                            IfFactor
-                              IfExpression
-                                IfSimpleExpression
-                                  IfTerm
-                                    IfFactor
-                                      Constant: c
-                                        Identifier: c
-                                    IfMoreTerms
-                                  IfMoreSimpleExpression
-                                IfRelationalOperator: >
-                                IfExpression
-                                  IfSimpleExpression
-                                    IfTerm
-                                      IfFactor
-                                        Constant: 15
-                                      IfMoreTerms
-                                    IfMoreSimpleExpression
-                            IfMoreTerms
-                              MultiplicativeOperator: and
-                              IfFactor
-                                IfExpression
-                                  IfSimpleExpression
-                                    IfTerm
-                                      IfFactor
-                                        Constant: b
-                                          Identifier: b
-                                      IfMoreTerms
-                                    IfMoreSimpleExpression
-                                  IfRelationalOperator: >
-                                  IfExpression
-                                    IfSimpleExpression
-                                      IfTerm
-                                        IfFactor
-                                          Constant: 15
-                                        IfMoreTerms
-                                      IfMoreSimpleExpression
-                              IfMoreTerms
-                          IfMoreSimpleExpression
-                    IfMoreTerms
-                  IfMoreSimpleExpression
-                    IfAdditiveOperator: or
-                    IfTerm
-                      IfFactor
-                        IfLocalDeclaration
-                          IfLocalAttribution
-                            Identifier: m
-                            IfLocalAttributionOperator: :=
-                            IfExpression
-                              IfSimpleExpression
-                                IfTerm
-                                  IfFactor
-                                    Constant: 25
-                                  IfMoreTerms
-                                IfMoreSimpleExpression
-                      IfMoreTerms
-            ThenScope
-              ConclusionList
-                Conclusion
-                  ThenAttribution
-                    Identifier: ml
-                    ThenExpression
-                      ThenSimpleExpression
-                        ThenTerm
-                          ThenFactor
-                            ThenExpression
-                              ThenSimpleExpression
-                                ThenTerm
-                                  ThenFactor
-                                    ThenExpression
-                                      ThenSimpleExpression
-                                        ThenTerm
-                                          ThenFactor
-                                            Constant: 569
-                                          ThenMoreTerms
-                                        ThenMoreSimpleExpression
-                                  ThenMoreTerms
-                                ThenMoreSimpleExpression
-                                  ThenAdditiveOperator: +
-                                  ThenTerm
-                                    ThenFactor
-                                      Constant: 12
-                                    ThenMoreTerms
-                                      ThenMultiplicativeOperator: *
-                                      ThenFactor
-                                        Constant: 5
-                                      ThenMoreTerms
-                          ThenMoreTerms
-                        ThenMoreSimpleExpression
-parser.VariableDeclaration@c21495vou analisar IfScope
