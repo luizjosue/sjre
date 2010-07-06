@@ -1,0 +1,32 @@
+variable:
+	int: var1, var2, var3, var4, foobar, foo, gaguinho, testeDeOrdem
+	boolean: abc
+	object: umAluno
+fact:
+	var1 	= 13
+	var4 	> 12
+	foo		= 1
+	umAluno = new java.lang.Integer()
+
+
+rule:
+
+/* 1 */
+if (var4 > 10)
+		then var3 = 10
+
+/* 2 */
+if (var3 > 9)
+		then var2 = 5
+
+/* 3 */
+if (var2 > 4) and (var3 > 9) and (foobar > 2)
+		then var1 = 3, testeDeOrdem = 8
+
+/* 4 */
+if (foo > 0)
+		then foobar = 3
+
+/* 5 */
+if (var1 > 10)
+		then abc = true, gaguinho = 10

@@ -1,0 +1,8 @@
+			lowLimit   isOpenLow    highLimit    isOpenHigh
+
+diferenca		value, 	   true,        value,        true
+igualdade		value, 	   false,       value,        false
+maior			value, 	   true,        null,         true
+maior igual		value, 	   false,       null,         true
+menor			null,  	   true,        value,        true
+menor igual		null,      true,        value,        false

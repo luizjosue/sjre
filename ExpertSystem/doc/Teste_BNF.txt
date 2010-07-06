@@ -1,0 +1,210 @@
+<letra>						->	A..Z|a..z
+
+<digito>					->	0..9
+
+<alfanumerico>				->	<letra>
+							| <digito>
+
+<literal inteiro>			->	<digito>{<digito>}
+
+<literal ponto flutuante>	->	<digito>{<digito>}[.<digito>{<digito>}]
+
+<car>						->	<letra>
+							| <digito>
+							| <caracter especial>
+
+<cadeia caracteres>			->	"{<car>}"
+
+
+<identificador de variavel>	-> 	<identificador>
+
+<identificador>				->	<letra>{<alfanumerico>|_}
+
+<tipo>						->  string	# tipo.type := STRING  #
+							| real		# tipo.type := NUMBER  #
+							| int		# tipo.type := NUMBER  #
+							| boolean	# tipo.type := BOOLEAN #
+							| object	# tipo.type := OBJECT  #
+
+<declaracao de variaveis>	->	variables:
+									<lista variaveis>
+									{<lista variaveis>}
+
+<lista variaveis>			-> 	<tipo>: <identificador>{,<identificador>} 	# identificador.type := tipo.type #
+
+
+<declaracao de fatos>		->	facts:
+									<lista de fatos>
+
+<lista de fatos>			->	<fato>
+									{<lista fatos>}
+
+<fato>						->	<atribuicao escopo entao>
+
+<atribuicao escopo se>		->	<identificador de variavel> := <expressao escopo se>
+
+<atribuicao escopo entao>	-> 	<identificador de variavel> = <expressao escopo entao>
+								| <chamada de atributo> = <expressao escopo entao>
+								| <intervalo> (<op_atribuicao_intervalo>|<op_inclusao_intervalo>) <expressao escopo entao>
+
+
+<intervalo>					-> <identificador> <op_relacional escopo entao> <expressao>
+							| <identificador> = ([|])(<lista de numeros>)([|])
+
+<lista de numeros>			-> (<literal inteiro>|<literal ponto flutuante>)..(<literal inteiro>|<literal ponto flutuante>)
+
+
+<expressao escopo se> 					-> <expressao simples escopo se>
+		      			   				| <expressao simples se> <op_relacional_se> <expressao simples escopo se> 
+		      			   				| <intervalo> <op_relacional_intervalo> <intervalo>{<op_relacional_intervalo> <intervalo>}
+
+<expressao simples escopo se> 			-> <termo escopo se> <mais_expressao_simples escopo se>
+										| <op_ad_se><termo escopo se><mais_expressao_simples escopo se>
+
+<mais_expressao_simples escopo se> 		-> <op_ad_se> <termo escopo se>
+										| &
+
+<termo escopo se> 						-> <fator escopo se> <mais_termos escopo se>
+
+<mais_termos escopo se> 				-> <op_mult_se> <fator escopo se> <mais_termos escopo se>
+										| &
+
+<fator escopo se>						-> <literal_inteiro>
+		      							| <literal_ponto_flutuante>
+		      							| <identificador>
+										| true
+				      					| false
+		    		  					| not <fator se>
+	      								| <chamada de metodo>
+	      								| <chamada de atributo>
+	      								| (<expressao escopo se>)
+
+<op_ad_se> 								-> 	+
+      									| -
+      									| or
+
+<op_mult_se> 							-> 	*
+		      							| /
+		      							| and 
+
+<op_relacional_se>						-> 	=
+										| <
+										| >
+										| <=
+										| >=
+										| !=
+
+
+
+
+
+<expressao escopo entao> 				-> <expressao simples escopo entao>
+		      			   				| <expressao simples entao> <op_relacional_entao> <expressao simples escopo entao>
+
+<expressao simples escopo entao> 		-> <termo escopo entao> <mais_expressao_simples escopo entao>
+										| <op_ad_entao><termo escopo entao><mais_expressao_simples escopo entao>
+
+<mais_expressao_simples escopo entao> 	-> <op_ad_entao> <termo escopo entao>
+										| &
+
+<termo escopo entao> 					-> <fator escopo entao> <mais_termos escopo entao>
+
+<mais_termos escopo entao> 				-> <op_mult_entao> <fator escopo entao> <mais_termos escopo entao>
+										| &
+
+<fator escopo entao>					-> <literal_inteiro>
+				      					| <literal_ponto_flutuante>
+				      					| <identificador>
+										| true
+				      					| false
+				      					| not <fator entao>
+				      					| <chamada de metodo>
+				      					| <chamada de atributo>
+				      					| (<expressao escopo entao>)
+
+<op_ad_entao> 							-> 	+
+      									| -
+      									| or
+
+<op_mult_entao> 						-> 	*
+		      							| /
+		      							| and 
+
+<op_relacional_entao>					-> 	=
+										| <
+										| >
+										| <=
+										| >=
+										| !=
+
+
+
+<chamada de atributo>		-> <identificador de objeto>.<identificador de atributo>
+
+<chamada de metodo>			-> <identificador>.<identificador>(<lista de argumentos>)
+
+<lista de argumentos>		-> <argumento>{,<argumento>} 
+							| &
+							
+<argumento>					-> <identificador> | <literal inteiro> |
+							| <literal ponto flutuante> | <car> | <cadeia caracteres> |
+							| <chamada de atributo> | <chamada de metodo>
+
+<op_atribuicao_intervalo>	-> <op_relacional_entao>
+
+<op_relacional_intervalo>	-> =
+							| !=
+							
+<op_inclusao_intervalo>	-> +=
+							| +=<
+							| +=>
+							| +=!=
+							| +=<=
+							| +=>=
+
+<lista de regras>			->	{<regra>}
+
+<regra>						->	<decisao>
+
+<decisao>					->	<escopo se>
+								<escope entao>
+
+<escopo se>					-> se <expressao_se>
+
+<escopo entao>				-> entao <lista de conclusoes>
+
+<lista de conclusoes> 		-> 	<conclusao>{"and"<conclusao>} 
+
+<conclusao>					->	<atribuicao escopo entao>
+
+<programa>					->	[<declaracao de variaveis>]
+								[<lista de fatos>]
+								rule:
+									<lista de regras>
+
+
+
+atribuicao: <identificador>.<identificador> := expressao
+<identificador>.<identificador>	(<lista de parametros>)
+
+Obs: Variaveis sem valor so tem escopo no <decisao> corrente
+
+
+if (body) 
+then (head)
+
+Head:
+
+Nunca uma chamada de metodo recebe alguma coisa
+
+Object1.atributo = Object2.atributo ou Object1.atributo = Object2.getAtributo() eh valido e Object1.atributo sera avaliado como Object1.getAtributo()
+Object1.atributo > Object2.atributo nao eh valido
+variavel > Object.atributo eh valido
+com outro operador da erro, nao eh permitido chamada de metodo no lado esquerdo. So sera setIdade() neste caso.
+
+
+Body:
+
+So compara object com = e !=
+
+void eh true

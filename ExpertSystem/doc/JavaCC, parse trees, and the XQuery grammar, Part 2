@@ -1,0 +1,475 @@
+<html xmlns:fo="http://www.w3.org/1999/XSL/Format"><head><!--XSLT stylesheet used to transform this file:  dw-document-html-2.2.xsl--><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"><title>JavaCC, parse trees, and the XQuery grammar, Part 2</title><meta content="(PICS-1.1
+    &quot;http://www.icra.org/ratingsv02.html&quot; l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1)
+    &quot;http://www.rsac.org/ratingsv01.html&quot; l gen true r (n 0 s 0 v 0 l 0)
+    &quot;http://www.classify.org/safesurf/&quot; l gen true r (SS~~000 1))" http-equiv="PICS-Label"><meta http-equiv="Expires" content="0"><meta content="[XQuery grammar parsers Java JavaCC JJTree parse tree Howard Katz IBM developer works xml]" name="keywords"><meta content="[20021216 vgs]" name="lastupdated"><meta content="Part 1 of this article took an introductory look at grammars, parsers, and BNF. It then introduced JavaCC, a popular parser generator. Part 2 shows you how to modify the sample code in Part 1 so that you can use an additional tool, JJTree, to build a parse tree representation of the same parse. You'll explore the advantages of this approach and look at how to write Java code to walk the parse tree at runtime in order to recover its state information, and evaluate the expression being parsed. The article concludes by showing you how to develop a generalizable routine for walking and evaluating a parse tree that you'll generate from a small portion of the XQuery grammar. " name="ABSTRACT">
+<meta content="Part 1 of this article took an introductory look at grammars, parsers, and BNF. It then introduced JavaCC, a popular parser generator. Part 2 shows you how to modify the sample code in Part 1 so that you can use an additional tool, JJTree, to build a parse tree representation of the same parse. You'll explore the advantages of this approach and look at how to write Java code to walk the parse tree at runtime in order to recover its state information, and evaluate the expression being parsed. The article concludes by showing you how to develop a generalizable routine for walking and evaluating a parse tree that you'll generate from a small portion of the XQuery grammar. " name="DESCRIPTION"><meta content="JavaCC, parse trees, and the XQuery grammar, Part 2" name="TITLE">
+<meta content="https://www-136.ibm.com/developerworks/secure/feedback.jsp?domain=developerworks" name="OWNER"><meta content="2002-12-1" scheme="iso8601" name="DC.Date"><meta content="en-us" scheme="rfc1766" name="DC.Language"><meta content="zz" name="IBM.Country"><meta content="Public" name="SECURITY"><meta content="Copyright (c) 2002 by IBM Corporation" name="DC.Rights"> <meta content="index,follow" name="ROBOTS"><script type="text/javascript" language="JavaScript" src="_files/style.js"></script><link type="text/css" href="_files/ns1.css" rel="stylesheet"><script type="text/javascript" language="JavaScript" src="_files/spinbox.js"></script><script type="text/javascript" language="JavaScript">var title = "JavaCC, parse trees, and the XQuery grammar, Part 2"; </script><script type="text/javascript" language="JavaScript">var forumURL = "http://www-106.ibm.com/developerworks/forums/dw_forum.jsp?forum=215&cat=11"; </script><script type="text/javascript" language="JavaScript">var contentAreaList = "xml, java"; </script><script type="text/javascript" language="JavaScript" src="_files/forumwindow.js"></script><script type="text/javascript" language="JavaScript">var emailAbstract = "Part 1 of this article took an introductory look at grammars, parsers, and BNF. It then introduced JavaCC, a popular parser generator. Part 2 shows you how to modify the sample code in Part 1 so that you can use an additional tool, JJTree, to build a parse tree representation of the same parse. You'll explore the advantages of this approach and look at how to write Java code to walk the parse tree at runtime in order to recover its state information, and evaluate the expression being parsed. The article concludes by showing you how to develop a generalizable routine for walking and evaluating a parse tree that you'll generate from a small portion of the XQuery grammar. "; </script><script type="text/javascript" language="JavaScript" src="_files/grabtitle.js"></script><script type="text/javascript" language="JavaScript" src="_files/emailfriend2.js"></script><script type="text/javascript" language="JavaScript">var demoURL = ""; </script><script type="text/javascript" language="JavaScript" src="_files/demowindow.js"></script></head><body bgcolor="#ffffff" marginheight="2" marginwidth="2" topmargin="2" leftmargin="2"><table cellpadding="0" cellspacing="0" border="0" width="100%"> 
+<tbody><tr>
+<td class="tbgc" width="160"><a href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=http://www.ibm.com/&amp;origin=dwheader"><img height="47" width="160" alt="IBM" border="0" src="_files/ibm-logo.gif"></a></td>
+<td class="tbgdw" width="90"><a href="#main"><img alt="Skip to main content" height="1" width="70" border="0" src="_files/c.gif"></a></td>
+
+<td valign="top" align="right" class="tbgc" width="100%">
+<input value="1" name="searchType" type="hidden">
+<input type="hidden" name="searchSite" value="dW">
+ 
+<table cellspacing="0" cellpadding="0" border="0"> 
+<form name="form1" id="form1" action="http://www-106.ibm.com/search/searchResults.jsp" method="get"></form><tbody><tr><td colspan="7"><img alt="" height="4" width="390" border="0" src="_files/c.gif"></td></tr>
+
+<tr nowrap="" valign="middle">
+<td class="dwsearch24"><b>Search for:</b> </td>
+<td><input maxlength="100" size="18" height="15" name="query" class="dwsearch" type="text" id="searchformq"></td>
+<td class="dwsearch24"> <b>within</b> </td>
+<td class="dwsearch"><select class="dwsearch" name="searchScope" id="selectscopeq"><option value="dW">All of dW</option><option value="dW">-----------------</option><option value="db2">  DB2</option><option value="eserver">  eServer</option><option value="lotus">  Lotus</option><option value="rdd">  Rational</option><option value="tivoli">  Tivoli</option><option value="WSDD">  WebSphere</option><option value="dW">-----------------</option><option value="acZ">  Autonomic computing</option><option value="gridZ">  Grid computing</option><option value="javaZ">  Java technology</option><option value="linuxZ">  Linux</option><option value="opensrcZ">  Open source</option><option value="webarchZ">  Web arch.</option><option value="webservZ">  Web services</option><option value="wirelessZ">  Wireless</option><option value="xmlZ">  XML</option><option value="dW">-----------------</option><option value="forums">  dW forums</option><option value="dW">-----------------</option><option value="toolbox">  dW Subscription</option><option value="dW">-----------------</option><option value="aW">alphaWorks</option><option value="dW">-----------------</option><option value="all">All of IBM</option></select></td>
+
+<td><img alt="" height="1" width="5" border="0" src="_files/c.gif"></td>
+<td><label for="searchformq"><input alt="Search button" name="Search" value="Search" border="0" height="23" width="64" src="_files/search.gif" type="image"></label></td>
+<td valign="top"><img alt="" height="1" width="10" border="0" src="_files/c.gif"></td></tr>
+
+<tr valign="top">
+<td> </td>
+<td class="dwsmallwh"> </td><td> </td><td class="dwsmall"><a target="_blank" style="color: rgb(255, 255, 255);" href="http://www-106.ibm.com/developerworks/search/help-dw.html">Search help</a><img alt="" height="1" width="1" border="0" src="_files/c.gif"></td>
+<td colspan="4"> </td>
+</tr>
+
+<tr><td colspan="8"><img alt="" height="4" width="390" border="0" src="_files/c.gif"></td></tr>
+</tbody></table>
+
+</td></tr>
+
+<tr><td class="hbg" height="21" width="160"> </td><td class="bbg" valign="top" height="21" colspan="2">   <a href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=http://www.ibm.com/&amp;origin=dwheader" class="mainlink">IBM home</a><span class="divider">  |  </span><a href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=http://www.ibm.com/products/&amp;origin=dwheader" class="mainlink">Products &amp; services</a><span class="divider">  |  </span><a href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=http://www.ibm.com/support/" class="mainlink">Support &amp; downloads</a> <span class="divider">  |  </span><a href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=http://www.ibm.com/account/&amp;origin=dwheader" class="mainlink">My account</a></td></tr></tbody></table><table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr valign="top"><td width="5"><img src="_files/c.gif" width="5" height="1" border="0" alt=""></td><td width="100%"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr valign="top"><td width="100%"><img src="_files/c.gif" width="2" height="4" border="0" alt=""><br><a class="dwbctl" href="http://www-106.ibm.com/developerworks/">developerWorks</a>  &gt;  
+        <a class="dwbctl" href="http://www-106.ibm.com/developerworks/xml/">XML</a> | <a class="dwbctl" href="http://www-106.ibm.com/developerworks/java/">Java technology</a></td><td width="136" align="right"><a href="http://www-106.ibm.com/developerworks/"><img src="_files/dwlogo-small.gif" width="136" height="24" border="0" alt="developerWorks"></a></td><td width="5"><img src="_files/c.gif" width="5" height="1" border="0" alt=""></td></tr></tbody></table></td></tr></tbody></table><a name="main"></a><a name="top"></a><table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr valign="top"><td colspan="5"><img src="_files/c.gif" width="5" height="15" border="0" alt=""></td></tr><tr valign="top"><td width="2"><img src="_files/c.gif" width="2" height="1" border="0" alt=""></td><td><span class="atitle">JavaCC, parse trees, and the XQuery grammar, Part 2</span></td><td width="8"><img src="_files/c.gif" width="8" height="1" border="0" alt=""></td><td width="180" align="right"><img src="_files/c.gif" width="180" height="1" border="0" alt=""><br><nobr><a href="javascript:void forumWindow()"><img src="_files/icon-discuss.gif" width="42" height="26" border="0" alt="Discuss"></a><a href="ftp://www6.software.ibm.com/software/developer/library/x-javacc2.pdf"><img src="_files/icon-pdf.gif" width="35" height="26" border="0" alt="88KB"></a><a href="javascript:void newWindow()"><img src="_files/icon-email.gif" width="46" height="26" border="0" alt="e-mail it!"></a></nobr></td><td width="6"><img src="_files/c.gif" width="6" height="1" border="0" alt=""></td></tr><tr valign="top"><td colspan="5" bgcolor="#000000"><img src="_files/c.gif" width="100" height="1" border="0" alt=""></td></tr><tr valign="top"><td colspan="5" bgcolor="#ffffff"><img src="_files/c.gif" width="100" height="8" border="0" alt=""></td></tr></tbody></table><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr valign="top"><td width="5"><img src="_files/c.gif" width="5" height="1" border="0" alt=""></td><td width="100%"><table width="168" align="right" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td width="8"><img src="_files/c.gif" width="5" height="21" alt=""></td><td width="160"><table width="160" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td bgcolor="#000000" height="1" width="160"><img src="_files/c.gif" width="160" height="1" alt=""></td></tr><tr><td height="5" background="_files/bg-gold.gif" align="center"><b>Contents:</b></td></tr><tr><td bgcolor="#666666" height="1" width="160"><img src="_files/c.gif" width="160" height="1" alt=""></td></tr><tr><td><table width="160" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td><a href="#JJTree_Basics">JJTree basics</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="#Step_by_step">Step-by-step through a JJTree grammar</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="#working">Working with the parse tree</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="#aids">Aids to navigation</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="#saving">Saving and restoring state</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="#putting">Putting it all together: A BNF snippet for XQuery</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="#walking">Walking the parse tree client-side</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="#conclusion">Conclusion</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><!--Standard links for every dw-article--><tr><td><a href="#resources">Resources</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="#author1">About the author</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="#rating">Rate this article</a></td></tr><tr><td><img src="_files/c.gif" width="160" height="10" alt=""></td></tr></tbody></table></td></tr></tbody></table><table width="160" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td bgcolor="#000000" height="1" width="160"><img src="_files/c.gif" width="160" height="1" alt=""></td></tr><tr><td height="5" background="_files/bg-gold.gif" align="center"><b>Related content:</b></td></tr><tr><td bgcolor="#666666" height="1" width="160"><img src="_files/c.gif" width="160" height="1" alt=""></td></tr><tr><td><table width="160" border="0" cellspacing="0" cellpadding="1"><tbody><tr><td><a href="http://www-106.ibm.com/developerworks/xml/library/x-javacc1.html">JavaCC, parse trees, and the XQuery grammar, Part </a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="http://www-106.ibm.com/developerworks/library/x-xquery.html">An introduction to XQuery</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr></tbody></table></td></tr></tbody></table><table width="160" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td bgcolor="#000000" height="1" width="160"><img src="_files/c.gif" width="160" height="1" alt=""></td></tr><tr><td height="5" background="_files/bg-gold.gif" align="center"><b>Subscriptions:</b></td></tr><tr><td bgcolor="#666666" height="1" width="160"><img src="_files/c.gif" width="160" height="1" alt=""></td></tr><tr><td><table width="160" border="0" cellspacing="0" cellpadding="1"><tbody><tr><td><a href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=www-106.ibm.com/developerworks/newsletter/&amp;origin=dw-article">dW newsletters</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr><tr><td><a href="http://www-106.ibm.com/developerworks/toolbox/">dW Subscription<br>(CDs and downloads)</a></td></tr><tr><td height="1"><img src="_files/c.gif" width="160" height="5" alt=""></td></tr></tbody></table></td></tr></tbody></table><table width="160" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td colspan="2" bgcolor="#000000" height="2" width="150"><img src="_files/c.gif" width="160" height="2" alt=""></td></tr><tr><td colspan="2" bgcolor="#ffffff" height="2" width="150"><img src="_files/c.gif" width="160" height="2" alt=""></td></tr></tbody></table></td></tr></tbody></table><span class="atitle2">Building and walking a custom parse tree using JJTree</span><br><table cellpadding="0" cellspacing="0" border="0"><tbody><tr align="left" valign="top"><td><p>Level: Intermediate</p></td></tr></tbody></table><p><a href="#author1"><name>Howard Katz</name></a> (<a href="mailto:howardk@fatdog.com?cc=&amp;subject=JavaCC,%20parse%20trees,%20and%20the%20XQuery%20grammar,%20Part%202">howardk@fatdog.com</a>)<br>Proprietor, Fatdog Software<br> 1 December  2002</p><blockquote>Part
+1 of this article took an introductory look at grammars, parsers, and
+BNF. It then introduced JavaCC, a popular parser generator. Part 2
+shows you how to modify the sample code in Part 1 so that you can use
+an additional tool, JJTree, to build a parse tree representation of the
+same parse. You'll explore the advantages of this approach and look at
+how to write Java code to walk the parse tree at runtime in order to
+recover its state information, and evaluate the expression being
+parsed. The article concludes by showing you how to develop a
+generalizable routine for walking and evaluating a parse tree that
+you'll generate from a small portion of the XQuery grammar. </blockquote>
+<p>Using the JavaCC parser generator has one major downside: Much or
+most of your client-side Java code needs to be embedded in the .jj
+grammar script that encodes your BNF (Backus-Naur Form). This means you
+lose many of the advantages that a proper Java IDE can provide you
+during the development cycle.</p>
+
+<p>Enter JJTree, JavaCC's companion tool. JJTree is set up to emit a
+parser whose main job at runtime is not to execute embedded Java
+actions, but to build an independent parse-tree representation of the
+expression that's being parsed. This lets you capture the state of the
+parse session in a single tree that's easy to walk and interrogate at
+runtime, independent of the parsing code that produced it. Working with
+a parse tree representation also makes debugging easy and speeds
+development time. JJTree is distributed as part of the JavaCC
+distribution (see <a href="#resources">Resources</a>).</p>
+
+<p>I'll note before we go any further that the terms <b>parse tree</b> and
+<b>abstract syntax tree</b> (or AST) describe very similar grammatical
+structures. Strictly speaking, what I refer to as a parse tree in the
+following, language theoreticians would more precisely call an AST.</p>
+
+<p>To work with JJTree, you need to be able to:</p>
+<ol>
+<li>Create the .jjt script that JJTree takes as input</li>
+<li> Write client-side code to walk and evaluate the parse tree that's produced at runtime</li>
+</ol>
+
+<p>This article shows you how to do both. It doesn't cover everything, but it'll certainly get you started.</p>
+
+<p><a name="JJTree_Basics"><span class="atitle2">JJTree basics</span></a><br>
+
+JJTree is a preprocessor, and generating a parser for a particular BNF is an easy two-step process:</p>
+<ol>
+<li>Run JJTree against a so-called .jjt file; this emits an intermediate .jj file</li>
+<li>Compile that with JavaCC (this process was covered in <a href="http://www-106.ibm.com/developerworks/xml/library/x-javacc1.html" target="_new">Part 1</a>)</li>
+</ol>
+
+<p>Fortunately, the structure of a .jjt file is a minor extension of
+the .jj format that I showed you in Part 1. The primary difference is
+that JJTree adds a new syntactic <b>node-constructor</b> construct
+which lets you specify where and under what conditions parse-tree nodes
+are to be generated during the parse. In other words, this governs the
+shape and content of the parse tree that's constructed by the parser.</p>
+
+<p>Listing 1 shows a simple JavaCC .jj script that's similar to the
+ones you saw in Part 1. For simplicity, I'm showing productions only.</p>
+<a name="code1"><b>Listing 1. A JavaCC grammar for simpleLang</b></a><br><table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+
+void simpleLang()   : {}  { addExpr() &lt;EOF&gt; }
+void addExpr()    : {}  { integerLiteral() ( "+" integerLiteral() )? } 
+void integerLiteral() : {}  { &lt;INT&gt; }
+
+SKIP  : { " " | "\t" | "\n" | "\r" }
+TOKEN : { &lt; INT : ( ["0" - "9"] )+ &gt; }
+</code></pre></td></tr></tbody></table>
+
+<p>This grammar states that a legal expression in this language consists of either:</p>
+<ol>
+<li>a single integer literal, or</li>
+<li>an integer literal, followed by a plus sign, followed by another integer literal.</li>
+</ol>
+
+<p>The corresponding JJTree .jjt script (again, slightly abbreviated) might look something like the following:</p>
+<a name="code2"><b>Listing 2. The JJTree equivalent to the JavaCC grammar in Listing 1</b></a><br><table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+
+SimpleNode simpleLang() : #Root       {}  { addExpr() &lt;EOF&gt; { return jjtThis; }}
+void addExpr()          :             {}  { integerLiteral() 
+                                          ( "+" integerLiteral() #Add(2) )? } 
+void integerLiteral()   : #IntLiteral {}  { &lt;INT&gt; } 
+
+SKIP  : { " " | "\t" | "\n" | "\r" }
+TOKEN : { &lt; INT : ( ["0" - "9"] )+ &gt; }
+</code></pre></td></tr></tbody></table>
+
+<p>This script adds several new syntactic features to those you've
+already seen. Let's just touch on the highlights for the moment. I'll
+fill in the details later. </p>
+
+<p><a name="Step_by_step"><span class="atitle2">Step-by-step through a JJTree grammar</span></a><br>
+
+Note first that JavaCC's procedural syntax for the topmost <code>simpleLang()</code> production now specifies a return type: <code>SimpleNode</code>. This, together with the embedded Java action, <code>return jjtThis</code> (a bit of JJTree hand-waving), specifies that calling the parser's <code>simpleLang()</code> method from your application code returns the root of the parse tree, which is then available for treewalking.</p>
+
+<p>The parser invocation that looked like this in JavaCC:</p>
+<table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+    SimpleParser parser = new SimpleParser(new StringReader( expression ));
+
+    parser.simpleLang();
+</code></pre></td></tr></tbody></table>
+
+<p>
+now looks like this:</p>
+  <table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+    SimpleParser parser = new SimpleParser(new StringReader( expression ));
+
+    SimpleNode rootNode = parser.simpleLang();
+</code></pre></td></tr></tbody></table>
+
+<p>Note that the root node you're grabbing isn't simply of type <code>SimpleNode</code>. It's really of type <code>Root</code>, as indicated by the <code>#Root</code> directive in <a href="#code2">Listing 2</a> (although you don't use that fact in your calling code above). <code>Root</code> is a <code>SimpleNode</code> descendant, as is every node constructed by a JJTree-generated parser. I'll show you several of <code>SimpleNode</code>'s built-in methods below.</p>
+
+<p>The <code>#Add(2)</code> construct in the <code>addExpr()</code> production differs from the <code>#Root</code> directive above it in several ways:</p>
+<ul>
+<li>It's parameterized. The tree builder uses a node stack during tree
+construction; the default behavior for a node constructor with no parameters
+is to place itself at the top of the parse tree that's under construction,
+popping all the nodes off the node stack that were created in the same
+<i>node scope</i> and hoisting itself into position as the parent of those
+nodes. The argument <code>2</code> tells the new parent (an <code>Add</code> node in
+this case) to adopt exactly <i>two</i> children, the two
+<code>IntLiteral</code> subnodes described in the <a href="#bullet2">following bullet</a>. The
+JJTree documentation describes this process in more detail. Walking through
+the parse tree at runtime with a good debugger is another invaluable adjunct
+to understanding how tree building works in JJTree.</li>
+
+<li><a name="bullet2">Of equal importance</a>, the placement of the <code>#Root</code> directive outside the body of its production means that a <code>Root</code> node is generated <i>every time</i> this production is traversed (which admittedly only happens once in this particular case). However, the placement of the <code>#Add(2)</code> directive inside an optional "zero or one" term means that an <code>Add</code> node is only generated <i>conditionally</i>
+if the optional clause containing it is traversed during the parse --
+in other words, if this production represents a true addition
+operation. When that happens, <code>integerLiteral()</code> is traversed twice, contributing a single <code>IntLiteral</code> node to the tree on each invocation. Both <code>IntLiteral</code> nodes become children of the <code>Add</code> node that invokes them. However, if the expression being parsed is a single integer, then the resulting <code>IntLiteral</code> node becomes a child of <code>Root</code> directly.</li>
+</ul>
+
+<p>Pictures are worth a kiloword (to bring a old saw up to date).
+Here's a graphic representation of the two types of parse trees
+generated by the above grammar:</p>
+
+<p><a name="Figure1"><b>Figure 1: Parse tree for a single integer expression</b></a><br><img alt="Picture of parse tree for a single integer expression" height="68" width="80" src="_files/fig1.gif"></p>
+
+<p><a name="Figure2"><b>Figure 2: Parse tree for an addition operation</b></a><br><img alt="Picture of parse tree for an addition operation" height="107" width="137" src="_files/fig2.gif"></p>
+
+<p>Let's look at the class hierarchy for <code>SimpleNode</code> in a bit more detail.</p>
+
+<p><a name="working"><span class="atitle2">Working with the parse tree</span></a><br>
+
+Every node you declare in a .jjt script instructs the parser to generate a subclass of a JJTree <code>SimpleNode</code>. <code>SimpleNode</code>, in turn, implements a Java interface called <code>Node</code>. The source files for both of these classes are generated automatically by every JJTree script, along with a custom .jj file. <a href="#code1">Listing 1</a> shows the current example of a custom .jj file. In the current example, JJTree also emits source files for your own classes -- <code>Root</code>, <code>Add</code>, and <code>IntLiteral</code> -- as well as several additional helper classes not looked at here.</p>
+
+<p>All <code>SimpleNode</code> subclasses inherit useful behavior. The <code>SimpleNode</code> method <code>dump()</code>
+is a case in point. It also serves as an example of my earlier
+contention that using parse trees makes debugging easier and
+consequently speeds development time. The following three-line snippet
+of client-side code instantiates the parser, invokes it, grabs the
+parse tree that's returned, and dumps a straightforward, textual
+representation of the tree to the console:</p>
+  <table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+    SimpleParser parser = new SimpleParser(new StringReader( expression ));
+
+    SimpleNode rootNode = parser.simpleLang();
+    rootNode.dump();
+</code></pre></td></tr></tbody></table>
+
+<p>The debug output for the tree in <a href="#Figure2">Figure 2 </a> would be:</p>
+<table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+    Root
+        Add
+            IntLiteral
+            IntLiteral
+</code></pre></td></tr></tbody></table>
+<p><a name="aids"><span class="atitle2">Aids to navigation</span></a><br>
+
+Another useful built-in <code>SimpleNode</code> method is <code>jjtGetChild(int)</code>. When you're navigating downward through the parse tree on the client side and encounter an <code>Add</code> node, you'll want to grab its <code>IntLiteral</code>
+children, extract the integer values they represent, and add them
+together -- that, after all, is the purpose of the exercise. Assuming
+that <code>addNode</code>, shown in the next bit of code, is a variable representing the <code>Add</code>-type node we're interested in, we can access <code>addNode</code>'s two children. (<code>lhs</code> and <code>rhs</code> are commonly used abbreviations for <i>left-hand side</i> and <i>right-hand side,</i> respectively.)</p>
+
+<table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+     SimpleNode lhs = addNode.jjtGetChild( 0 );
+     SimpleNode rhs = addNode.jjtGetChild( 1 );
+</code></pre></td></tr></tbody></table>
+
+<p>With everything you've done so far, however, you still don't have
+quite enough information to calculate the results of the arithmetic
+operation represented by this parse tree. Your current script has
+omitted one important detail: The two <code>IntLiteral</code> nodes in
+the tree don't actually contain the integers they purport to represent.
+That's because you didn't save their values into the tree when the
+tokenizer encountered them in the input stream; you need to modify your
+<code>integerLiteral()</code> production to do that. You also need to add a few simple accessor methods to <code>SimpleNode</code>.</p>
+
+<p><a name="saving"><span class="atitle2">Saving and restoring state</span></a><br>
+
+To store the value of scanned tokens into the appropriate nodes, add the following modifications to <code>SimpleNode</code>:</p>
+<table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+    public class SimpleNode extends Node
+    {
+        String m_text;
+
+        public void   setText( String text ) { m_text = text; }
+        public String getText()              { return m_text; }
+        ...
+    }
+</code></pre></td></tr></tbody></table>
+
+<p>Change the following production in your JJTree script:</p>
+<table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+    void integerLiteral() : #IntLiteral {} &lt;INT&gt; } 
+</code></pre></td></tr></tbody></table>
+
+<p>to this:</p>
+<table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+    void integerLiteral() : #IntLiteral { Token t; } 
+                                        { t=&lt;INT&gt; { jjtThis.setText( t.image );} }
+</code></pre></td></tr></tbody></table>
+
+<p>This production grabs the raw text value of the integer it's just encountered from <code>t.image</code> and uses your <code>setText()</code> setter to store that string in the current node. The client-side <code>eval()</code> code in <a href="#code5">Listing 5</a> shows how to use the corresponding <code>getText()</code> getter.</p>
+
+<p>You can easily modify <code>SimpleNode.dump()</code> to emit the value of <code>m_text</code>
+for any node that's stored it during a parse -- I'll leave that as a
+proverbial exercise for you. This gives an even better visualization of
+what the parse tree looks like for debugging purposes. For example, if
+you parsed "42 + 1", a slightly modified <code>dump()</code> routine can produce the following useful output:</p>
+
+<table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+    Root     
+        Add         
+            IntLiteral[42]         
+            IntLiteral[1] 
+</code></pre></td></tr></tbody></table>
+
+<p><a name="putting"><span class="atitle2">Putting it all together: A BNF snippet for XQuery</span></a><br>
+Let's put it all together and conclude by looking at a snippet of an
+actual, real-world grammar. I'll show you a very small subset of the
+BNF for XQuery, the W3C's specification for a query language for XML.
+(See <a href="#resources">Resources</a>.)
+Most of what I'm saying here applies to XPath as well, since the two
+share much of the same grammar in common. I'll also look briefly at the
+issue of operator precedence and generalize the treewalking code into a
+full-fledged recursive routine that's able to handle arbitrarily
+complex parse trees.</p>
+
+<p><a href="#code3">Listing 3</a> shows the piece of the XQuery grammar that you'll work with. This snippet of BNF is from the November 15, 2002 working draft:</p>
+<a name="code3"><b>Listing 3: A portion of the XQuery grammar</b></a><br><table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+ 
+[21]  Query              ::= QueryProlog QueryBody
+  ...
+[23]  QueryBody          ::= ExprSequence?
+[24]  ExprSequence       ::= Expr ( "," Expr )*
+[25]  Expr               ::= OrExpr
+  ...
+[35]  RangeExpr          ::= AdditiveExpr ( "to"  AdditiveExpr )*
+[36]  AdditiveExpr       ::= MultiplicativeExpr (("+" | "-") MultiplicativeExpr )*
+[37]  MultiplicativeExpr ::= UnionExpr (("*" | "div" | "idiv" | "mod") UnaryExpr )*
+      ...
+</code></pre></td></tr></tbody></table>
+
+<p>You're going to build just enough of a JJTree grammar script to handle the <code>+</code>, <code>-</code>, <code>*</code>, and <code>div</code>
+operators in productions [36] and [37], again with the simplifying
+assumption that the only datatype this grammar knows about is integers.
+This sample grammar is <i>extremely</i> small and does no justice to
+the richness of expression and data types supported by XQuery. However,
+it should give you a good head start in using JavaCC and JJTree, if
+you're going to build parsers for larger, more complex grammars.</p>
+
+<p><a href="#code4">Listing 4</a> shows the .jjt script. Note the <code>options{}</code>
+block at the top of the file. These options (there are a number of
+other switches available as well) specify, among other things, that
+tree building in this case operates in <i>multi</i> mode, where node
+constructors are used to explicitly name the types of generated nodes.
+The alternative (not explored here) is for productions to contribute
+only <code>SimpleNode</code> nodes to the parse tree and not subclasses thereof. That option is useful if you want to avoid proliferating node classes.</p>
+
+<p>Note also that the original XQuery BNF frequently multiplexes
+multiple operators into the same production. I've demultiplexed these
+into separate productions in the JJTree script in <a href="#code4">Listing 4</a>,
+since this makes the code on the client side more straightforward. To
+mulitiplex, simply store away the scanned operator's value, exactly as
+you did for integers.</p>
+<a name="code4"><b>Listing 4: The JJTree script for the XQuery grammar in Listing 3</b></a><br><table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+     
+options {
+   MULTI=true;
+   NODE_DEFAULT_VOID=true;
+   NODE_PREFIX="";
+}
+
+PARSER_BEGIN( XQueryParser )
+package examples.example_2;
+public class XQueryParser{}
+PARSER_END( XQueryParser )
+
+SimpleNode query()     #Root      : {} { additiveExpr() &lt;EOF&gt; { return jjtThis; }}
+void additiveExpr()               : {} { subtractiveExpr() 
+                                       ( "+" subtractiveExpr() #Add(2) )* }
+void subtractiveExpr()            : {} { multiplicativeExpr() 
+                                       ( "-" multiplicativeExpr() #Subtract(2) )* }
+void multiplicativeExpr()         : {} { divExpr() ( "*" divExpr() #Mult(2) )* }
+void divExpr()                    : {} { integerLiteral() 
+                                       ( "div" integerLiteral() #Div(2) )* }
+void integerLiteral() #IntLiteral :    { Token t; }  
+                                       { t=&lt;INT&gt; { jjtThis.setText(t.image); }}
+
+SKIP  : { " " | "\t" | "\n" | "\r" }
+TOKEN : { &lt; INT : ( ["0" - "9"] )+ &gt; }
+</code></pre></td></tr></tbody></table>
+
+<p>This .jjt file introduces several new features. For one, the arithmetic productions in this grammar are now <i>iterative</i>: Their optional second terms are expressed using a <code>*</code> (zero or more) occurrence indicator, as opposed to the <code>?</code> (zero or one) notation in <a href="#code2">Listing 2</a>. The parser emitted by this script can parse arbitrarily long expressions such as "1 + 2 * 3 div 4 + 5".</p>
+
+<p><a name="putting"><span class="atitle3">Implementing precedence</span></a><br>
+
+This grammar also knows about <i>operator precedence</i>.
+You would expect multiplication, for example, to have a higher
+precedence than addition. In practical terms, this means an expression
+like "1 + 2 * 3" would be evaluated as "1 + ( 2 * 3 )" and not "( 1 + 2
+) * 3".</p>
+
+<p>Precedence is achieved using the cascading style, where each
+production calls the higher-precedent production immediately following
+it. That, as well as the placement and format of the node constructors,
+guarantees that the parse tree is generated in the proper conformation
+so that treewalking does the right thing. It might be easier to grasp
+this with some visual aids.</p>
+
+<p><a href="#Figure3">Figure 3</a> shows the parse tree generated by
+this grammar that correctly enables you to evaluate "1 + 2 * 3" as "1 +
+( 2 * 3 )". Note that the <code>Mult</code> operator binds its terms tighter than does <code>Plus</code>, which is exactly what you want:</p>
+
+<p><a name="Figure3"><b>Figure 3. A properly formed tree</b></a><br><img alt="Picture of a properly formed tree" height="153" width="203" src="_files/fig3.gif"></p>
+
+<p>And, <a href="#Figure4">Figure 4</a> shows a tree (which this grammar <i>doesn't</i> generate) indicating that you (incorrectly) wanted to evaluate this as "(1 + 2) * 3".</p>
+
+<p><a name="Figure4"><b>Figure 4. An incorrectly formed tree</b></a><br><img alt="Picture of an incorrectly formed tree" height="153" width="186" src="_files/fig4.gif"></p>
+
+<p><a name="walking"><span class="atitle2">Walking the parse tree client-side</span></a><br>
+I conclude as promised with a listing for the client-side code that
+invokes this parser and walks the parse tree it generates, using a
+simple but powerful, recursive <code>eval()</code> function to do the right thing with each node it encounters during the treewalk. Comments in <a href="#code5">Listing 5</a> provide additional detail on internal JJTree workings.</p>
+<a name="code5"><b>Listing 5. An easily generalizable eval() routine</b></a><br><table border="1" cellspacing="0" cellpadding="5" width="100%" bgcolor="#cccccc"><tbody><tr><td><pre><code>
+ 
+    // return the arithmetic result of evaluating 'query'
+    public int parse( String query )
+    //------------------------------
+    {
+        SimpleNode root = null;
+
+   // instantiate the parser
+        XQueryParser parser = new XQueryParser( new StringReader( query ));
+
+        try
+        {
+            // invoke it via its topmost production
+            // and get a parse tree back
+
+            root = parser.query();
+            root.dump("");
+        }
+        catch( ParseException pe ) {
+            System.out.println( "parse(): an invalid expression!" ); 
+        }
+        catch( TokenMgrError e )  { 
+            System.out.println( "a Token Manager error!" );  
+        }
+
+        // the topmost root node is just a placeholder; ignore it.
+
+        return eval( (SimpleNode) root.jjtGetChild(0) );
+    }
+
+    int eval( SimpleNode node )
+    //-------------------------
+    {
+        // each node contains an id field identifying its type.
+        // we switch on these. we could use instanceof, but that's less efficient
+        
+        // enum values such as JJTINTLITERAL come from the interface file
+        // SimpleParserTreeConstants, which SimpleParser implements.
+        // This interface file is one of several auxilliary Java sources 
+        // generated by JJTree. JavaCC contributes several others.
+        
+        int id = node.id;
+
+        // eventually the buck stops here and we unwind the stack
+        if ( node.id == JJTINTLITERAL )
+            return Integer.parseInt( node.getText() );
+
+        SimpleNode lhs =  (SimpleNode) node.jjtGetChild(0);
+        SimpleNode rhs =  (SimpleNode) node.jjtGetChild(1);
+
+        switch( id )
+        {
+            case JJTADD :       return eval( lhs ) + eval( rhs );
+            case JJTSUBTRACT :  return eval( lhs ) - eval( rhs );           
+            case JJTMULT :      return eval( lhs ) * eval( rhs );
+            case JJTDIV :       return eval( lhs ) / eval( rhs );
+            
+            default :
+
+                throw new java.lang.IllegalArgumentException(
+                                  "eval(): invalid operator!" );
+        }
+    }
+</code></pre></td></tr></tbody></table>
+
+<p><a name="conclusion"><span class="atitle2">Conclusion</span></a><br>
+
+If you want to see a much beefier version of an <code>eval()</code>
+function that handles much of the real XQuery grammar, feel free to
+download a copy of my open-source XQuery implementation, XQEngine. (See
+<a href="#resources">Resources</a>.) Its <code>TreeWalker.eval()</code> routine <i>cases </i>on some 30-odd XQuery node types. A .jjt script is provided.</p>
+<p><a name="resources"><span class="atitle2">Resources</span></a></p><ul><li>Participate in the <a href="javascript:void forumWindow()">discussion forum</a> on this article.  (You can also click <b>Discuss</b> at the top or bottom of the article to access the forum.)<br><br></li><li>Review <a href="http://www-106.ibm.com/developerworks/xml/library/x-javacc1.html">Part 1</a>
+of this article for a brief discussion of grammars, parsers, and BNF,
+and an introduction to JavaCC. You'll also find sample code that uses
+JavaCC to build a custom parser, starting from a BNF description of the
+grammar. <br><br></li><li>Check out the free (though not open-source) <a href="http://www.webgain.com/products/java_cc/">distribution for JavaCC and JJTree</a>.<br><br></li><li>Find out more about the W3C's XQuery and XPath specifications at the <a href="http://www.w3.org/XML/Query">XML Query home page</a>.<br><br></li><li><a href="http://www.fatdog.com/">XQEngine</a> is the author's Java-based open-source implementation of an XQuery engine.<br><br></li><li>Want to find out more about BNF? Check out  <a href="http://www.wikipedia.org/wiki/Backus-Naur_form">Wikipedia.org</a>.<br><br></li><li>Find more information on the technologies covered in this article at the developerWorks <a href="http://www.ibm.com/developerworks/xml/">XML</a> and <a href="http://www-106.ibm.com/developerworks/java/">Java technology</a> zones. <br><br></li><li><a href="http://www-3.ibm.com/software/info1/websphere/index.jsp?tab=landings/studiosplashv5">IBM WebSphere Studio</a>
+provides a suite of tools that automate XML development, both in Java
+and in other languages. It is closely integrated with the <a href="http://www-3.ibm.com/software/webservers/appserv/">WebSphere Application Server</a>, but can also be used with other J2EE servers. <br><br></li><li>Find out how you can become an <a href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=http://www-1.ibm.com/certify/certs/adcdxmlrt.shtml&amp;origin=x">IBM Certified Developer in XML and related technologies</a>.<br><br></li></ul><p></p><table border="0" cellspacing="0" cellpadding="0" width="100%"><tbody><tr><td><a name="author1"></a><span class="atitle2">About the author</span><br>Howard
+Katz lives in Vancouver, Canada, where he is the sole proprietor of
+Fatdog Software, a company that specializes in software for searching
+XML documents. He's been an active programmer for nearly 35 years (with
+time off for good behavior) and is a long-time contributor of technical
+articles to the computer trade press. Howard cohosts the Vancouver XML
+Developer's Association and is the editor of an upcoming book from
+Addison Wesley, <i>The Experts on XQuery</i>, a compendium of
+technical perspectives on XQuery by members of the W3C's Query working
+group. He and his wife do ocean kayaking in the summer and backcountry
+skiing in the winter. You can contact Howard at <a href="mailto:howardk@fatdog.com">howardk@fatdog.com</a>.</td></tr></tbody></table><br clear="all"><img src="_files/c.gif" width="100" height="10" border="0" alt=""><br><table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr valign="top"><td width="100%" align="right"><a href="javascript:void forumWindow()"><img src="_files/icon-discuss.gif" width="42" height="26" border="0" alt="Discuss"></a><a href="ftp://www6.software.ibm.com/software/developer/library/x-javacc2.pdf"><img src="_files/icon-pdf.gif" width="35" height="26" border="0" alt="88KB"></a><a href="javascript:void newWindow()"><img src="_files/icon-email.gif" width="46" height="26" border="0" alt="e-mail it!"></a></td><td width="5"><img src="_files/c.gif" width="5" height="1" border="0" alt=""></td></tr><tr valign="top"><td colspan="2" bgcolor="#000000"><img src="_files/c.gif" width="100" height="1" border="0" alt=""></td></tr><tr valign="top"><td colspan="2" bgcolor="#ffffff"><img src="_files/c.gif" width="100" height="8" border="0" alt=""></td></tr></tbody></table><br><table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr valign="top"><td><form method="post" action="http://www.alphaworks.ibm.com/developerworks/ratings.nsf/RateArticle?CreateDocument"><input type="hidden" name="ArticleTitle" value="JavaCC, parse trees, and the XQuery grammar, Part 2"><input type="hidden" name="Zone" value="XML, Java"><input type="hidden" name="RedirectURL" value="http://www-106.ibm.com/developerworks/thankyou/feedback-thankyou.html"><a name="rating"><b>What do you think of this document?</b></a><table border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr><td colspan="5"><img src="_files/c.gif" width="100" height="8" border="0" alt=""></td></tr><tr valign="top"><td width="16%"><input type="radio" name="Rating" value="5">Killer! (5)</td><td width="20%"><input type="radio" name="Rating" value="4">Good stuff (4)</td><td width="24%"><input type="radio" name="Rating" value="3">So-so; not bad (3)</td><td width="22%"><input type="radio" name="Rating" value="2">Needs work (2)</td><td width="18%"><input type="radio" name="Rating" value="1">Lame! (1)</td></tr></tbody></table><br><b>Send us your comments or click Discuss to share your comments with others.</b><br><textarea name="Comments" wrap="virtual" rows="5" cols="60"></textarea><br><br><input type="submit" value="Submit feedback"></form></td></tr><tr valign="top"><td bgcolor="#ffffff"><img src="_files/c.gif" width="100" height="8" border="0" alt=""></td></tr></tbody></table><table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr valign="top"><td width="100%"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr valign="top"><td width="100%"><img src="_files/c.gif" width="2" height="4" border="0" alt=""><br><a class="dwbctl" href="http://www-106.ibm.com/developerworks/">developerWorks</a>  &gt;  
+        <a class="dwbctl" href="http://www-106.ibm.com/developerworks/xml/">XML</a> | <a class="dwbctl" href="http://www-106.ibm.com/developerworks/java/">Java technology</a></td><td width="136" align="right"><a href="http://www-106.ibm.com/developerworks/"><img src="_files/dwlogo-small.gif" width="136" height="24" border="0" alt="developerWorks"></a></td><td width="5"><img src="_files/c.gif" width="5" height="1" border="0" alt=""></td></tr></tbody></table></td></tr></tbody></table></td><td width="1"><img src="_files/c.gif" width="1" height="1" border="0" alt=""></td></tr></tbody></table><!-- IBM FOOTER -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td><img alt="" height="1" width="1" src="_files/c.gif"></td>
+</tr>
+<tr valign="top">
+<td class="bbg" height="21">  <a class="mainlink" href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=http://www.ibm.com/ibm/?origin=dwheader">About IBM</a><span class="divider">  |  </span><a class="mainlink" href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=http://www.ibm.com/privacy/?origin=dwheader">Privacy</a><span class="divider">  |  </span><a class="mainlink" href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=http://www.ibm.com/legal/?origin=dwheader">Terms of use</a><span class="divider">  |  </span><a class="mainlink" href="http://www-106.ibm.com/developerworks/cgi-bin/click.cgi?url=http://www.ibm.com/contact/?origin=dwheader">Contact</a></td>
+</tr>
+</tbody></table>
+<!-- END IBM FOOTER -->
+
+<!-- SURFAID METRICS ** 05/01/03 DO NOT ALTER ** -------------->
+<script src="_files/stats.js" language="JavaScript1.2" type="text/javascript"></script>
+<noscript><img src="//stats.www.ibm.com/rc/images/uc.GIF?R=noscript" width="1" height="1" alt="" border="0" /></noscript></body></html>
