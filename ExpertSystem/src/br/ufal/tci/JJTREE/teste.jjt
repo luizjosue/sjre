@@ -1,0 +1,417 @@
+options{
+	IGNORE_CASE = true;
+	MULTI=true;
+  	VISITOR=true;
+  	NODE_DEFAULT_VOID=true;
+}
+
+PARSER_BEGIN( Parser_1 )
+package br.ufal.tci.JJTREE;
+public class Parser_1 {}
+PARSER_END( Parser_1 )
+
+SKIP  : {   " " 
+			| "\t" 
+			| "\n" 
+			| "\r"
+			|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+			|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/"> }
+
+TOKEN: {
+		<VARIABLE: "variable">|
+		<FACT: "fact">|
+		<RULE: "rule">
+}
+
+TOKEN: {
+		<NOT: "not">
+		| <TRUE: "true">
+		| <FALSE: "false">
+}
+
+TOKEN: {
+		<STRING:  "string">
+		| <REAL: "real">
+		| <INT: "int">
+		| <BOOLEAN: "boolean">
+		| <OBJECT: "object">
+}
+
+TOKEN: {
+		<IF_TOKEN: "if">
+		| <THEN_TOKEN: "then">
+}
+
+TOKEN: {
+		<OR: "or">
+		| <AND: "and">
+		| <NEW: "new">
+}
+
+TOKEN: {
+		<INTEGER_LITERAL: <DIGIT>(<DIGIT>)*>
+		| <FLOATING_POINT_LITERAL: <DIGIT>(<DIGIT>)* | ((<DIGIT>(<DIGIT>)*) + "." (<DIGIT>(<DIGIT>)*))>
+		| <CHARACTER_LITERAL: "\'" <LETTER> | <DIGIT> | <ALL_CHARACTERS> "\'">
+		| <STRING_LITERAL: "\"" (<LETTER>|<DIGIT>|<ALL_CHARACTERS>)* "\"">
+		| <IDENTIFIER: <LETTER>(<ALPHA_NUMERIC>|"_")*>
+		| <#ALPHA_NUMERIC: <LETTER>|<DIGIT>>
+		| <#LETTER: ["A"-"Z"]|["a"-"z"]>
+		| <#DIGIT: ["0"-"9"]>
+		| <#SPECIAL_CHARACTER: ["\n","\r"]>
+		| <#ALL_CHARACTERS: (~["\"","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))>
+}
+
+SimpleNode Root() #Root : {}
+{ Program()
+	{
+		return jjtThis;
+	}
+}
+
+ASTStart Start() #Start : {}
+{
+  Program()
+  { return jjtThis; }
+}
+
+void ObjectInstanciation() #ObjectInstanciation : {}
+{
+	Identifier()"="<NEW>Identifier()(("."Identifier())*)"("ArgumentList()")"
+}
+
+Token Identifier() #ID : {Token t;}
+{
+  t=<IDENTIFIER>
+  {
+    jjtThis.setName(t.image);
+  }
+  {return t;}
+}
+
+void Interval() #Interval : {}
+{
+	Identifier()"="((("<" | ">" | "<=" | ">=" | "!=") ThenExpression() ) | (("["|"]")ListOfNumbers()("["|"]")))
+}
+
+void ListOfNumbers() #ListOfNumbers : {}
+{
+	(<INTEGER_LITERAL>|<FLOATING_POINT_LITERAL>)".."(<INTEGER_LITERAL>|<FLOATING_POINT_LITERAL>)
+}
+
+void ArgumentList() #ArgumentList : {}
+{
+	[Argument()(","Argument())*]
+}
+
+Token Integer() #Integer : {Token t;}
+{
+	t = <INTEGER_LITERAL>
+	{
+		jjtThis.setToken(t);
+	}
+	{return t;}
+}
+
+Token FloatPoint() #FloatPoint : {Token t;}
+{
+	t = <FLOATING_POINT_LITERAL>
+	{
+		jjtThis.setToken(t);
+	}
+	{return t;}
+}
+
+
+Token CharacterLiteral() #CharacterLiteral : {Token t;}
+{
+	t = <CHARACTER_LITERAL>
+	{
+		jjtThis.setToken(t);
+	}
+	{return t;}
+}
+
+Token StringLiteral() #StringLiteral : {Token t;}
+{
+	t = <STRING_LITERAL>
+	{
+		jjtThis.setToken(t);
+	}
+	{return t;}
+}
+
+
+void Argument() #Argument : {Token t=null;}
+{
+	(t=Integer()) | (t=FloatPoint()) | (t=CharacterLiteral()) | (t=StringLiteral()) | (Identifier()["."Identifier()["("ArgumentList()")"]])
+	{
+		jjtThis.setToken(t);
+	}
+}
+
+void VariableDeclaration() #VariableDeclaration : {}
+{
+	<VARIABLE>":"
+	VariableList()
+	(VariableList())*
+}
+
+void VariableList() #VariableList : {}
+{
+	Type()":"Identifier()(LOOKAHEAD(2)","Identifier())*
+}
+
+void Type() #Type : {Token t;}
+{
+	((t = <STRING>) | (t = <REAL>) | (t = <INT>) | (t = <BOOLEAN>) | (t = <OBJECT>))
+
+	{
+	  jjtThis.setName(t.image);
+	}
+
+}
+
+void Constant() #Constant : {Token t;}
+{
+	((t = <INTEGER_LITERAL>)  | (t = <FLOATING_POINT_LITERAL>)  | (t = <STRING_LITERAL>) | (t = <TRUE>)  | (t = <FALSE>))
+
+	{
+	  jjtThis.setName(t.image);
+	  jjtThis.setToken(t);
+	}
+
+}
+
+void Variable() #Variable : {Token t;}
+{
+	(t = Identifier())
+	{
+	  jjtThis.setName(t.image);
+	  jjtThis.setToken(t);
+	}
+}
+
+void IfRelationalOperator() #IfRelationalOperator : {Token t;}
+{
+
+	((t = "=") | (t = "<") | (t = ">") | (t = "<=") | (t = ">=") | (t = "!="))
+
+	{
+	  jjtThis.setName(t.image);
+	}
+}
+
+void IfExpression() #IfExpression : {}
+{
+	(IfSimpleExpression()[LOOKAHEAD(2)(IfRelationalOperator())IfExpression()])
+}
+
+void IfSimpleExpression() #IfSimpleExpression : {}
+{
+	(IfTerm()IfMoreSimpleExpression()) | (IfAdditiveOperator()IfTerm()IfMoreSimpleExpression())
+}
+
+void IfAdditiveOperator() #IfAdditiveOperator : {Token t;}
+{
+
+	((t = "+") | (t = "-") | (t = <OR>))
+
+	{
+	  jjtThis.setName(t.image);
+	}
+}
+
+void IfMoreSimpleExpression() #IfMoreSimpleExpression : {}
+{
+	[LOOKAHEAD(2)(IfAdditiveOperator())IfTerm()]
+}
+
+void IfTerm() #IfTerm : {}
+{
+	IfFactor()IfMoreTerms()
+}
+
+void MultiplicativeOperator() #MultiplicativeOperator : {Token t;}
+{
+
+	((t = "*") | (t = "/") | (t = <AND>))
+
+	{
+	  jjtThis.setName(t.image);
+	}
+}
+
+void IfMoreTerms() #IfMoreTerms : {}
+{
+	[LOOKAHEAD(3)(MultiplicativeOperator())IfFactor()IfMoreTerms()]
+}
+
+void IfLocalDeclaration() #IfLocalDeclaration : {}
+{
+	IfLocalAttribution()
+}
+
+void IfLocalAttribution() #IfLocalAttribution : {}
+{
+	Identifier()IfLocalAttributionOperator()IfExpression()
+}
+
+void IfLocalAttributionOperator() #IfLocalAttributionOperator : {Token t;}
+{
+	(t = ":=")
+
+	{
+	  jjtThis.setName(t.image);
+	}
+
+}
+
+void IfFactor() #IfFactor : {}
+{
+	LOOKAHEAD(2)IfLocalDeclaration() | Constant() | Variable() | <NOT> IfFactor() | ("("IfExpression()")")
+}
+
+void ThenRelationalOperator() #ThenRelationalOperator : {Token t;}
+{
+
+	((t = "=") | (t = "<") | (t = ">") | (t = "<=") | (t = ">=") | (t = "!="))
+
+	{
+	  jjtThis.setName(t.image);
+	}
+}
+
+void ThenExpression() #ThenExpression : {}
+{
+	(ThenSimpleExpression()[LOOKAHEAD(2)(ThenRelationalOperator())ThenExpression()]) 
+}
+
+void ThenAdditiveOperator() #ThenAdditiveOperator : {Token t;}
+{
+
+	((t = "+") | (t = "-") | (t = <OR>))
+
+	{
+	  jjtThis.setName(t.image);
+	}
+}
+
+void ThenSimpleExpression() #ThenSimpleExpression : {}
+{
+	((ThenTerm()ThenMoreSimpleExpression()) | ((ThenAdditiveOperator())ThenTerm()ThenMoreSimpleExpression()))
+}
+
+void ThenMoreSimpleExpression() #ThenMoreSimpleExpression : {}
+{
+	[(ThenAdditiveOperator())ThenTerm()]
+}
+
+void ThenTerm() #ThenTerm : {}
+{
+	ThenFactor()ThenMoreTerms()
+}
+
+
+void ThenMultiplicativeOperator() #ThenMultiplicativeOperator : {Token t;}
+{
+
+	((t = "*") | (t = "/") | (t = <AND>))
+
+	{
+	  jjtThis.setName(t.image);
+	}
+}
+
+void ThenMoreTerms() #ThenMoreTerms : {}
+{
+	[(ThenMultiplicativeOperator())ThenFactor()ThenMoreTerms()]
+}
+
+void ThenFactor() #ThenFactor : {}
+{
+	Constant() | Variable() | (<NOT> ThenFactor()) | ("("ThenExpression()")")
+}
+
+
+void RuleDeclaration() #RuleDeclaration : {}
+{
+	<RULE>":"
+	ListOfRules()
+}
+
+void ListOfRules() #ListOfRules : {}
+{
+	(Rule())+
+}
+
+void Rule() #Rule : {}
+{
+	DecisionStatement()
+}
+
+void DecisionStatement() #DecisionStatement : {}
+{
+	Body()
+	Head()
+}
+
+void Body() #Body : {}
+{
+	<IF_TOKEN> IfExpression()
+}
+
+void Head() #Head : {}
+{
+	<THEN_TOKEN>ConclusionList()
+}
+
+void ConclusionList() #ConclusionList : {}
+{
+	Conclusion()(LOOKAHEAD(2)","Conclusion())*
+}
+
+void Conclusion() #Conclusion : {}
+{
+	ThenAttribution()
+}
+
+void FactDeclaration() #FactDeclaration : {}
+{
+	<FACT>":"
+		ListOfFacts()
+}
+
+void ListOfFacts() #ListOfFacts : {}
+{
+	Fact()
+	[ListOfFacts()]
+}
+
+void Fact() #Fact : {}
+{
+	LOOKAHEAD(3)ObjectInstanciation() | Identifier()ThenRelationalOperator()ThenExpression() 
+}
+
+void ThenInclusiveOperator() #ThenInclusiveOperator : {Token t;}
+{
+
+	((t = "+=") | (t = "+=<") | (t = "+=!=") | (t = "+=<=") | (t = "+=>="))
+
+	{
+	  jjtThis.setName(t.image);
+	}
+}
+
+void ThenAttribution() #ThenAttribution : {Token t;}
+{
+	( LOOKAHEAD(2)((t = Identifier())"="){jjtThis.addIdentifier(t.image);jjtThis.setAttribution(true);}
+	   | (LOOKAHEAD(2)((t = Identifier()){jjtThis.addIdentifier(t.image);}"."(t = Identifier())"="){jjtThis.addIdentifier(t.image);}
+	   | (Interval()((ThenRelationalOperator())|(ThenInclusiveOperator())))))ThenExpression()
+}
+
+void Program() #Program : {}
+{
+	[VariableDeclaration()]
+	[FactDeclaration()]
+	RuleDeclaration()
+}
