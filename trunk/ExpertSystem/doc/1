@@ -1,0 +1,37 @@
+
+X
+T
+A
+
+IF A , B THEN TEMPO
+* IF B , R THEN TEMPO
+*IF T , S THEN B
+IF X , U THEN A
+IF H THEN S
+
+
+IF A , B THEN TEMPO
+*IF X , U THEN A
+IF H THEN S
+
+
+
+fireRule(rule, prove = true)
+IF X , U THEN A
+
+
+fire(rule, prove = true)
+IF A , B THEN TEMPO
+rule = IF B , R THEN TEMPO
+
+
+
+
+Interpreter
+List getRulesWithVariableInHead(variable)
+bool fieRule(rule) thow RuntimeException
+
+
+InferenceEngineIF
+findVariable(var) -> perguntar ao usuário ou provar via encadeamento para trás
+

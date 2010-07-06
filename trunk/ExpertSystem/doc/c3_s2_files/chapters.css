@@ -1,0 +1,121 @@
+BODY { 
+    background: white;
+    color: black;
+   font-family: Times, serif;
+   text-align: justify;
+   margin: 2em;
+}
+
+H1 {
+	margin-bottom: 1.1em;
+	margin-top: 1.1em;
+	font-family: Times, serif;
+}
+
+    
+H1.ChNumber {
+	font-weight: bold;
+	font-size: 1.2em;
+	margin-bottom: 0em;
+	text-transform: capitalize;
+	text-align: center;
+    }
+
+H1.ChTitle {
+	font-variant: small-caps;
+	font-weight: bold;
+	font-size: 1.5em;
+	margin-bottom: 0em;
+	text-align: center;
+    }    
+
+H2 {
+	font-weight: bold;
+	font-size: 1em;
+    margin-top: 1.1em;
+    }
+
+H3 {
+	font-weight: bold;
+	font-size: 1em;
+    }
+H4 {
+	font-style: italic;
+	font-size: 1em;
+}
+    
+
+P.ChAuthor {
+	font-weight: bold;
+	margin-bottom: 5em;
+	margin-top: 0em;
+	text-align: center;
+}
+
+P.Figure {
+	text-align: center;
+	margin-right: 15%;
+	margin-left: 15%;
+}
+P.FigCaption {
+    margin-top: 0em;
+    text-align: center;
+}
+P.Reference {
+	font-size: 0.9em;
+	margin-left: 0.5em;
+	text-indent: -0.5em;
+}
+TABLE {
+    margin-left: auto;
+    margin-right: auto;
+}
+CAPTION {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-weight: bold;
+}
+   
+P.TableNote {
+	margin-top: 0em;
+}
+
+
+P.Menubar {
+     text-align: center;
+}
+P.CellHeader {
+	font-weight: bold;
+	font-size: 0.9em;
+	vertical-align: text-top;
+	text-align: center;
+}
+P.CellBodyLeft {
+	font-size: 0.9em;
+	vertical-align: text-top;
+	text-align: left;
+}
+P.CellBodyCenter {
+	font-size: 0.9em;
+	vertical-align: text-top;
+	text-align: center;
+}    
+
+DIV.Footnote {
+    font-size: .9em;
+    margin-left: 0.5em;
+    text-indent: -0.5em
+}
+
+HR.Footnote {
+    text-align: left;
+    width: 33%;
+}
+
+
+.Center {
+    text-align: center;
+}
+
+

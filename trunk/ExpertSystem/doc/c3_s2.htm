@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta name="generator" content="HTML Tidy, see www.w3.org">
+
+<title>Chp 3: Expert Systems Building Tools: Definitions</title><meta name="Filename" content="/kb/c3_s2.htm">
+<link rel="STYLESHEET" href="c3_s2_files/chapters.css" type="text/css"></head>
+
+<body>
+<h2>EXPERT SYSTEMS BUILDING TOOLS: DEFINITIONS</h2>
+
+<p>An expert system tool, or shell, is a software development
+environment containing the basic components of expert systems.
+Associated with a shell is a prescribed method for building
+applications by configuring and instantiating these components. Some of
+the generic components of a shell are shown in Figure <a href="#f3_1">
+3.1</a> and described below. The core components of expert systems are
+the knowledge base and the reasoning engine.</p>
+
+<p class="Figure"><a name="f3_1" href="http://www.wtec.org/loyola/kb/fh3_1.gif"><img alt="" src="c3_s2_files/f3_1.gif" height="125" width="468"></a><br>
+ Figure 3.1. Basic Components of Expert System Tools</p>
+
+
+<ol>
+<li><b>Knowledge base:</b> A store of factual and heuristic knowledge.
+An ES tool provides one or more knowledge representation schemes for
+expressing knowledge about the application domain. Some tools use both
+frames (objects) and IF-THEN rules. In PROLOG the knowledge is
+represented as logical statements.
+
+</li>
+
+<li><b>Reasoning engine:</b> Inference mechanisms for manipulating the
+symbolic information and knowledge in the knowledge base to form a line
+of reasoning in solving a problem. The inference mechanism can range
+from simple <i>modus ponens</i> backward chaining of IF-THEN rules to
+case-based reasoning.
+
+</li>
+
+<li><b>Knowledge acquisition subsystem:</b> A subsystem to help experts
+build knowledge bases. Collecting knowledge needed to solve problems
+and build the knowledge base continues to be the biggest bottleneck in
+building expert systems.
+
+</li>
+
+<li><b>Explanation subsystem:</b> A subsystem that explains the
+system's actions. The explanation can range from how the final or
+intermediate solutions were arrived at to justifying the need for
+additional data.
+
+</li>
+
+<li><b>User interface:</b> The means of communication with the user.
+The user interface is generally not a part of the ES technology, and
+was not given much attention in the past. However, it is now widely
+accepted that the user interface can make a critical difference in the
+perceived utility of a system regardless of the system's performance. 
+
+</li>
+</ol>
+
+<p>The following subsections survey Japanese ES tools that are on the
+market, observe current trends in tool development, and comment on the
+recent integration of fuzzy logic and neural networks into these tools.
+Finally, we describe in more detail one of the latest Japanese tools,
+ES/KERNEL2.</p>
+
+<h2>ES Building Tools on the Market</h2>
+
+<p>Traditionally, ES tools have been categorized by their hardware
+platform: PC- or Macintosh-based, workstation-based, or
+mainframe-based. (For example, see Harmon 1992a).</p>
+
+<p>Recently, new types of tools have come on the market that are
+characterized according to tasks (e.g., diagnosis, planning) and
+problem-solving approaches (e.g., case-based reasoning or model based
+reasoning). These second generation tools encode the problem-solving
+know-how gained through building applications in different areas using
+the first generation tools. The emergence of such tools reflects the
+market condition in which vertical tools are perceived to be easier to
+use and easier to sell. A problem-specific, or task-specific, tool
+contains knowledge representation schemes and reasoning methods found
+useful for a particular class of applications and a task ontology
+associated with the problem class.</p>
+
+<p>Table <a href="#t3_1">3.1</a> lists most of the commercial tools
+developed in Japan. They are broadly categorized as general purpose,
+task-specific, solution-specific, and development methodology tools
+(i.e., tools for training implementors in the methodology for
+developing expert systems). There are also more general-purpose tools
+on the market than the list might indicate. A general purpose tool such
+as ES/KERNEL represents a class of tools, with a version of the tool
+for different types of hardware platforms -- ES/KERNEL/W for
+workstations; ES/KERNEL/H for mainframes and super-computers;
+ES/KERNEL/P for the personal computers; and ES/KERNEL/D for on-line
+data processing.</p>
+
+<p>In addition to the tools developed by the Japanese, foreign-made
+tools, primarily American, make up about 30 percent of the tools used
+in fielded expert systems in Japan. This JTEC panel is not aware of any
+Japanese tools being sold in the U.S. Components of the next version of
+ES/KERNEL -- ES/KERNEL2 -- are being developed in Europe and will be
+marketed there. Figure <a href="#f3_2">3.2</a> shows the relative
+popularity of the more common tools in use. The four most popular tools
+are those developed by domestic computer manufacturers, Hitachi,
+Fujitsu, and NEC. According to <i>Nikkei AI</i>, these tools are
+popular primarily because they can be used on hardware the customers
+already have. Tools that run on multiple platforms (mainframe,
+workstations, and PCs), such as ES/KERNEL and ESHELL, have been
+particularly popular. The decision to use American and small-vendor
+tools are generally made based on their features and capabilities
+rather than the platforms on which they run.</p>
+
+<p class="Figure"><b><a name="t3_1">Table 3.1</a><br>
+Commercial ES Building Tools Developed in Japan</b><br>
+ <img alt="" src="c3_s2_files/t3_1.gif" height="562" width="492"></p>
+
+<p class="Figure"><a name="f3_2" href="http://www.wtec.org/loyola/kb/fh3_2.gif"><img alt="" src="c3_s2_files/f3_2.gif" height="300" width="324"></a><br>
+ Figure 3.2. Expert System Tools in Use in Japan</p>
+
+<p>In its 1991 annual survey of fielded expert systems, <i>Nikkei
+AI</i> reported 48 applications developed with ES/KERNEL and 47 with
+ESHELL. Up until 1991, ESHELL was the dominant tool. In 1992, ES/KERNEL
+had overtaken ESHELL by a wide margin (Figure <a href="#f3_2">3.2</a>).
+ESHELL is considered to contain more advanced AI techniques, but
+ES/KERNEL is considered more practical and easier to use. Sales of
+these tools are affected by the platform on which they run and the base
+language used to write the system. The ESHELL family -- ESHELL
+(mainframe), ESHELL/X (mainframe and workstation), ESHELL/FM (personal
+computer), ESHELL/SB (minicomputer) -- are written in UTiLisp
+(University of Tokyo Interactive Lisp, quite archaic by present
+standards). ES/KERNEL runs on UNIX workstations and is written in C.
+The rising popularity of workstation tools and the drop in the sales of
+mainframe tools correlate with the general trend in the United States.
+The move to workstations in the U.S. is ironic since the tools were
+originally developed on workstations. Of course, today's workstation
+environment is quite different from the earlier days.</p>
+
+<h2>Market Trends</h2>
+
+<p>As will be seen, the trends in the type of ES building tools that
+have been, and will be, on the market are generally the same for both
+Japan and the U.S. In contrast, machine learning tools are receiving
+much more attention in Europe than in either Japan or the U.S. Up to
+now, the basic technology base of both the Japanese and American tools
+originated in U.S. laboratories; the tools of the two countries have
+have more in common than not. The following is a description of some of
+the trends the JTEC team observed that relate to tool technology.</p>
+
+<p><i>Specialization of tools</i>. Most first generation,
+general-purpose tools were built and marketed by the information
+systems divisions of large computer companies. The same groups are also
+developing second-generation, task-specific tools. These specialized
+tools are also beginning to be developed and sold by engineers
+servicing the end-user community. For example, the fourth most widely
+used tool, EUREKA, was built by the Heavy Industry Division of Hitachi
+as a tool to build real-time process control systems. MEL-DASH (Komai,
+Matsumoto et al. 1991), a special tool for diagnosing electrical
+network faults, is being built by a group at Mitsubishi Electric's
+Industrial Systems Laboratory specializing in the electric power
+industry.</p>
+
+<p>There are two underlying impetuses for developing task-specific
+tools. First, with a task-specific tool, the knowledge acquisition
+subsystem can be tailored to the particular class of problems for which
+the tool is intended, making knowledge acquisition easier for the
+application developer. The reasoning engine can also be customized to
+the task, making the system more efficient. The developers of MEL-DASH
+claim that specialization also allows them to build tools with a
+reusable library of software components and verification tools. Second,
+a task-specific tool geared to a particular end-user group's needs and
+ways of doing things is a good way to encourage use of the technology.
+Table <a href="#t3_2">3.2</a>, for example, shows Fujitsu's strategy
+for expanding the market for ES technology by providing tools for
+divisions that service end users.</p>
+
+<p>Table <a href="#t3_2">3.2</a> also shows another way in which
+Fujitsu is trying to expand the ES user base. YPS/KR and FORTRAN/KR are
+tools targeted to the COBOL and FORTRAN user communities. FORTRAN/KR
+claims to provide modeling facilities such as objects, rules and a high
+performance inference engine with fuzzy data, for integration in the
+FORTRAN programming environment. The representation of knowledge for
+design and control makes it easy to build intelligent and complex
+systems using FORTRAN programming in areas such as design, scientific
+computation and process control (Fujitsu America Inc. 1990). FORTRAN/KR
+runs on Fujitsu mainframe computers and Sun workstations.</p>
+
+<p class="Figure"><b><a name="t3_2">Table 3.2</a><br>
+Fujitsu's Strategy for Expanding ES Usage</b><br>
+ <img alt="" src="c3_s2_files/t3_2.gif" height="325" width="522"><br>
+ (Source: Fujitsu Limited)</p>
+
+<p>The decision to invest in the building of a task-specific tool is
+based on the demand for application systems in that area. Historically,
+diagnosis was the most popular application area for the first few years
+after the introduction of expert systems. Thus, diagnostic
+problem-solving is a well understood task area. More recently, both
+Fujitsu and Hitachi claim that scheduling and planning systems have
+become popular, and there are demands for specialized tools in these
+areas. Toshiba claims that design systems, especially in the area of
+LSI routing, are also increasingly in demand.</p>
+
+<p>An interesting phenomenon is the popularity of Hitachi's EUREKA, a
+tool for developing real-time control systems. It outsells domain
+shells in all other task areas, even though the number of real-time
+control systems being built is much smaller than other types of
+applications. Table <a href="#t3_3">3.3</a> shows the actual numbers of
+applications developed by the top five companies using ES technology.
+There is a surge in 1991 in the use of control programs that go hand in
+hand with the increase in the use of neural networks. (The use of
+neural networks in conjunction with expert systems is described later
+in this chapter.)</p>
+
+<p class="Figure"><b><a name="t3_3">Table 3.3</a><br>
+ES Development History of Top 5 ES-User Companies:<br>
+ Number of Applications by Year</b><br>
+ <img alt="" src="c3_s2_files/t3_3.gif" height="210" width="459"><br>
+(Source: A tutorial by Riichiro Mizoguchi, The First Congress on Expert
+Systems)</p>
+
+<p>The popularity of EUREKA parallels the rising popularity in the
+United States of G2, a real-time control system tool developed by
+GENSYM. (However, the use of neural networks in control systems is
+still rare in the United States.)</p>
+
+<p>Table <a href="#t3_3">3.3</a> also shows that companies that
+successfully deploy expert systems are repeat users.</p>
+
+<p>In addition to the tools sold by ES tool vendors, large companies
+are developing their own tools for specific task areas, which reflect
+what they have learned through their experiences. Company-specific
+processes and proprietary knowledge can be built into a tool and
+disseminated within the organization. Or, as at the Shimadzu Corp., the
+software system can be sold as part of, or a supplement to, a product
+line. Shimadzu Corp. produces general analysis and medical diagnostic
+devices. To build diagnostic and usage guidance software systems, the
+company developed GENZO-I, an analysis tool useful for diagnostic,
+classification, and interpretation tasks. GENZO-II, a hybrid tool using
+frames and rules, is used for synthesis problems such as planning and
+design (Hasegawa et al. 1991; Takata et al. 1991).</p>
+
+<p><i>Workstation tools</i>. Early developers of expert systems used
+American tools and LISP workstations to develop their applications. For
+example, Nippon Life Insurance developed its underwriting advisory
+system using KEE (KEE is a trademark of Intellicorp, Inc.) on the
+Symbolics workstation. Most early ES tools developed by the Japanese
+were for mainframes. It may be that the Japanese were forced to develop
+mainframe tools because there were none available at the time. Until
+recently, the ESHELL line, a mainframe-based tool, was the best-selling
+line.</p>
+
+<p>In the United States, a shift towards open, client-server
+architectures began to have a noticeable effect on the tools market
+beginning in early 1990, when there was a dramatic increase in the sale
+of tools on UNIX-based workstations. Sales jumped from around 3500
+units in both 1988 and 1989 to 6900 units in 1990 (Harmon 1992b).
+Although there is no comparable figure for Japan in terms of the actual
+number of tools sold, <i>Nikkei AI,</i> in its 1991 survey, noted an
+increase in the percentage of UNIX workstations used as the ES
+platform, and an accompanying decrease in the use of mainframe systems
+(see Figure <a href="#f3_3">3.3</a>). Hitachi representatives believe
+that the sudden popularity of Hitachi's ES/KERNEL can be attributed to
+the increased popularity of UNIX workstations in Japan. Of the more
+than 4,000 units of ES/KERNEL sold since 1987, 2,000 were sold in the
+last two years.</p>
+
+<p><i>Embedded systems and system integration</i>. In the early
+exploratory period, expert systems were stand-alone systems solving
+isolated problems. As customer confidence grew in the ability of ES
+technology to deliver solutions, expert systems were incorporated in
+larger systems. Knowledge representation and reasoning tools were
+augmented with tools to access databases, to interface with existing
+programs, and to operate in a mainframe environment. In many cases,
+especially with mainframe-oriented tools, the expert system component
+became a part of larger systems. Today, embeddability -- the ability to
+operate within many different environments and in concert with a
+variety of other software -- is a crucial aspect of expert systems and
+their development tools.</p>
+
+<p class="Figure"><a name="f3_3" href="http://www.wtec.org/loyola/kb/fh3_3.gif"><img alt="" src="c3_s2_files/f3_3.gif" height="190" width="373"></a><br>
+ Figure 3.3. Changes in the Hardware Types Used for ES Development<br>
+Note: "Others" Include PROLOG Machines. (Source: Nikkei AI 1991)</p>
+
+<p>At the outset, computer companies were active in building ES
+applications. System engineers trained in the use of ES technology
+regarded expert system technology as merely another software
+methodology. Thus, from the beginning they addressed the problems of
+system integration and development methodology. Fujitsu's ESHELL, until
+recently the number one seller, was based on a blackboard architecture
+which facilitated integration. Fujitsu software engineers were also
+able to adapt, for better or for worse, the waterfall model of software
+development to ES development. Hitachi's ES/GUIDE, which contains a
+step-by-step guide to ES development, draws heavily on the spiral model
+of software development process combined with the waterfall model to
+handle the documentation process. All this indicates that the Japanese
+have already made substantial investment, and have a broad experience
+base, in the <i>process</i> of ES development. Combined with their
+early experience in building expert systems on mainframe computers and
+in integrating expert systems with other systems, Japanese software
+engineers seem well prepared for building large expert systems and
+conventional systems containing expert system components.</p>
+
+<h2>Novel Features: Fuzzy Logic and Neural Networks</h2>
+
+<p>Most ES tools contain similar features. Knowledge is generally
+represented as IF-THEN rules, and in newer tools knowledge can also be
+represented as frames. The reasoning methods include forward chaining
+and backward chaining. And, most tools have facilities for generating
+explanations of the application programs' reasoning. Japanese ES tools
+are technically indistinguishable from U.S. tools, except in three
+areas: the user interface, which is to be expected; the extensive use
+of fuzzy logic (or multi-valued logic) to express inexactness; and
+connections to neural networks.</p>
+
+<p>In the most general sense, <i>fuzzy logic</i>, invented by Lotfi
+Zadeh (Zadeh 1965), is a multi-valued logic to express different
+degrees of certainty or uncertainty of assertions. Since expert systems
+contain heuristic knowledge, they must have a way of dealing with the
+problem of expressing and reasoning with uncertain data and inexact
+knowledge. Among the Japanese, fuzzy logic is an extremely popular
+solution for this problem. It is most popular among control engineers.
+The first significant use of fuzzy logic was in a Hitachi-built expert
+system that controlled the brakes on passenger trains (Yasunobu and
+Miyamoto 1985). Recently, fuzzy control has been used in consumer
+products -- for example, fuzzy rice cookers, fuzzy washing machines,
+fuzzy camcorders. Mitsubishi's fuzzy elevator system, described in
+Chapter <a href="http://www.wtec.org/loyola/kb/c2_s5.htm">2</a>, reduces the waiting time at
+floors.</p>
+
+<p>A <i>neural network</i> is typically used as a pre-processor to
+process signal data for process control and manufacturing systems. The
+neural net converts signals into symbolic information that can be
+reasoned by expert systems. The SAFIA system shown in Figure <a href="#f3_4">3.4</a> is an example of a typical process control program with
+a neural network front-end. Nippon Steel's SAFIA, built with Hitachi's
+EUREKA and Nippon Steel's own neuro-simulator AMI, controls the
+operation of the blast furnace. Typically, such expert systems are
+integrated with other types of software -- for example, a database
+management system, a user interface, and/or a statistical analysis
+package -- to create integrated control systems.</p>
+
+<p class="Figure"><a name="f3_4" href="http://www.wtec.org/loyola/kb/fh3_4.gif"><img alt="" src="c3_s2_files/f3_4.gif" height="200" width="386"></a><br>
+ Figure 3.4. SAFIA Blast Furnace Control System - Nippon Steel</p>
+
+<p class="Menubar"><a href="http://www.wtec.org/loyola/kb/c3_s1.htm"><img src="c3_s2_files/leftarrw.gif" alt="[Previous Section]" border="1" height="26" width="25"></a><a href="http://www.wtec.org/loyola/kb/toc.htm" onmouseover="window.status='Top of Report';return true"><img src="c3_s2_files/tocbttn.gif" alt="[Top of Report]" border="1" height="26" width="25"></a><a onmouseover="window.status='Send Your Comments';return true" href="http://www.wtec.org/cgi-bin/comments.pl?dir=kb&amp;file=c3_s2.htm"><img src="c3_s2_files/cmmntbt.gif" alt="[Send Your Comments]" border="1" height="26" width="25"></a><a href="http://www.wtec.org/loyola/welcome.htm" onmouseover="window.status='WTEC Welcome Page';return true"><img src="c3_s2_files/jtecbttn.gif" alt="[WTEC Welcome Page]" border="1" height="26" width="25"></a><a href="http://www.wtec.org/loyola/kb/c3_s3.htm"><img src="c3_s2_files/rghtarrw.gif" alt="[Next Section]" border="1" height="26" width="25"></a></p>
+
+
+<hr>
+<address><b>Published: May 1993</b>; <a href="http://www.wtec.org/loyola/lbrarian.htm">WTEC
+Hyper-Librarian</a></address>
+</body></html>

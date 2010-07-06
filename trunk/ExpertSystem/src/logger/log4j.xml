@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<!-- 
+		**************************************************** ATENÇÃO ****************************************************
+		Essa configuração deve ser replicada no servidor jboss, caminho: server/default/conf/jboss-log4j.xml, pois
+		como a camada de Serviços da aplicação está empacotada dentro do EAR e não está dentro do WAR da camada WEB,
+		a configuração do log4j não fica visível para as classes de serviços, somente quando essa configuração é feita
+		no servidor jboss é que os logs da camada de serviço são criados, o mesmo raciocínio se aplica aos logs do pacote
+		Commons da aplicação.
+	-->
+	
+	<!-- Appender Geral. É o que vai para console da Aplicação. Só sai INFO -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+    	<param name="Target" value="System.out"/>
+	    <layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
+    	</layout>
+	</appender>
+
+	<!-- Appender para camada de SERVICO do SIAGRO. -->			
+	<appender name="SIAGRO_SERVICO" class="org.apache.log4j.DailyRollingFileAppender">
+    	<param name="File" value="${jboss.server.home.dir}/log/SIAGRO_SERVICO.log"/>
+	    <param name="Append" value="true"/>
+	    <layout class="org.apache.log4j.PatternLayout">
+	    	<param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+	    </layout>	    
+	</appender>
+	 	
+	<!-- Appender ppara camada de APRESENTACAO do SIAGRO. -->
+	<appender name="SIAGRO_APRESENTACAO" class="org.apache.log4j.DailyRollingFileAppender">
+    	<param name="File" value="${jboss.server.home.dir}/log/SIAGRO_APRESENTACAO.log"/>
+	    <param name="Append" value="false"/>
+	    <layout class="org.apache.log4j.PatternLayout">
+	    	<param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+	    </layout>	    
+	</appender>
+	
+	<!-- Appender para Envio de EMAIL com mensagens de ERRO -->
+	<appender name="SIAGRO_EMAIL"  class="org.apache.log4j.net.SMTPAppender">
+        <param name="BufferSize" value="512" />
+        <param name="SMTPHost" value="smtp.conab.gov.br" />
+        <param name="From" value="siagro.excecao@conab.gov.br" />
+        <param name="To" value="siagro.excecao@conab.gov.br" />
+        <param name="Subject" value="[SIG-ERROR] Erro na aplicação" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+              value="[%d{ISO8601}]%n%n%-5p%n%n%c%n%n%m%n%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="FATAL"/>
+        </filter>
+    </appender>
+	
+	<!-- Appender para Arquivo com mensagens do STRUTS. -->
+	<appender name="SIAGRO_STRUTS" class="org.apache.log4j.DailyRollingFileAppender">
+    	<param name="File" value="${jboss.server.home.dir}/log/SIAGRO_STRUTS.log"/>
+	    <param name="Append" value="false"/>
+	    <layout class="org.apache.log4j.PatternLayout">
+	    	<param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+	    </layout>	    
+	</appender>
+	
+	<!-- Appender para Arquivo com mensagens do COMMONS. -->	
+	<appender name="SIAGRO_COMMONS" class="org.apache.log4j.DailyRollingFileAppender">
+    	<param name="File" value="${jboss.server.home.dir}/log/SIAGRO_COMMONS.log"/>
+	    <param name="Append" value="true"/>
+	    <layout class="org.apache.log4j.PatternLayout">
+	    	<param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+	    </layout>	    
+	</appender>
+	 
+	<!-- Configuração dos loggers (categories) -->	
+	<category name="br.gov.conab.siscorp.siagro.apresentacao">
+		<appender-ref ref="SIAGRO_APRESENTACAO"/> 
+	</category>
+				
+  	<category name="br.gov.conab.siscorp.siagro.servico">
+		<appender-ref ref="SIAGRO_SERVICO"/> 
+	</category>	 
+	   	 
+	<category name="br.gov.conab.siscorp.siagro.infra.struts.ExceptionHandler">
+		<appender-ref ref="SIAGRO_EMAIL"/>
+	</category>
+	
+  	<category name="org.apache.struts">
+		<appender-ref ref="SIAGRO_STRUTS"/>
+	</category>
+	
+	<category name="org.apache.commons">
+		<appender-ref ref="SIAGRO_COMMONS"/>
+	</category>
+       
+    <!-- ======================= -->
+    <!-- Setup the Root category -->
+    <!-- ======================= -->
+
+    <root>
+    	<!-- exibe somente informações no console -->
+    	<!-- <priority value="info"/>-->    
+    	<!-- exibe debug no console -->
+    	<priority value="debug"/>        	
+      	<appender-ref ref="CONSOLE"/>
+    </root>
+  
+</log4j:configuration>
