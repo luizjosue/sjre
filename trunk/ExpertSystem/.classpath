@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="conf"/>
+	<classpathentry kind="src" path="src/core"/>
 	<classpathentry kind="src" path="src/logger"/>
 	<classpathentry kind="src" path="src/tests"/>
 	<classpathentry kind="src" path="src/ui"/>
-	<classpathentry excluding="ui/|tests/|logger/" kind="src" path="src"/>
+	<classpathentry excluding="ui/|tests/|logger/|java/|core/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.13.jar"/>
 	<classpathentry kind="lib" path="lib/javax.mail_1.4.0.v200804091730.jar"/>
