@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.ufal.tci.HandlerObject.HandlerObject;
+import br.ufal.tci.HandlerObject.HandlerObjectImpl;
 import br.ufal.tci.InferenceEngine.InferenceEngineIF;
 import br.ufal.tci.exception.InvalidDataException;
 import br.ufal.tci.exception.MissingElementException;
@@ -252,7 +252,7 @@ public class Fact {
 						aux[j] = (String) parameters.get(j);
 					}
 					// this.handler =
-					new HandlerObject(packageName, aux, parametersValue
+					new HandlerObjectImpl(packageName, aux, parametersValue
 							.toArray());
 
 					/* Chamada a interface que trata instanciacao de objetos */
@@ -278,7 +278,7 @@ public class Fact {
 				for (int j = 0; j < parameters.size(); j++) {
 					aux[j] = (String) parameters.get(j);
 				}
-				HandlerObject handler = new HandlerObject(packageName, aux,
+				HandlerObjectImpl handler = new HandlerObjectImpl(packageName, aux,
 						parametersValue.toArray());
 				LoggerGenerator.debug("Handler instanciado " + handler);
 			}

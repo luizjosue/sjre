@@ -6,7 +6,7 @@
  */
 package br.ufal.tci.tests.main;
 
-import br.ufal.tci.HandlerObject.HandlerObjectIF;
+import br.ufal.tci.HandlerObject.HandlerObject;
 import br.ufal.tci.InferenceEngine.InferenceEngineIF;
 import br.ufal.tci.InferenceEngine.KnowledgeBase;
 import br.ufal.tci.exception.MissingElementException;
@@ -171,7 +171,7 @@ public class TesteEngine implements InferenceEngineIF {
 	 * 
 	 * @see br.ufal.tci.InferenceEngine.InferenceEngineIF#getObjectHandler()
 	 */
-	public HandlerObjectIF getObjectHandler() {
+	public HandlerObject getObjectHandler() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -183,7 +183,7 @@ public class TesteEngine implements InferenceEngineIF {
 	 * br.ufal.tci.InferenceEngine.InferenceEngineIF#setObjectHandler(br.ufal
 	 * .tci.HandlerObject.HandlerObjectIF)
 	 */
-	public void setObjectHandler(HandlerObjectIF objectIF) {
+	public void setObjectHandler(HandlerObject objectIF) {
 		// TODO Auto-generated method stub
 
 	}
