@@ -11,9 +11,6 @@ import java.util.List;
 
 /**
  * @author ljsf
- * 
- *         
- *         
  */
 public class VariableDeclaration {
 

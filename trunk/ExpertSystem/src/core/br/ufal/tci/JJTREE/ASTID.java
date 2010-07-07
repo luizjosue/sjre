@@ -28,8 +28,8 @@ public class ASTID extends SimpleNode {
 	/** Accept the visitor. **/
 	public Object jjtAccept(Parser_1Visitor visitor, Object data,
 			InferenceEngineIF engine) throws SemanticException {
-		LoggerGenerator
-				.debug("Visitando " + this.getClass().getCanonicalName());
+		LoggerGenerator.debug("Visitando " + this.getClass().getCanonicalName()
+				+ " " + this.name);
 		try {
 			if (data instanceof VariableList) {
 				VariableList variableList = (VariableList) data;

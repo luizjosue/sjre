@@ -23,6 +23,10 @@ import br.ufal.tci.value.Value;
  */
 public class Teste {
 
+	public Teste(String foo) {
+		System.out.println("teste de instanciacao");
+	}
+
 	public static void main(String[] args) {
 
 		String fileName;
@@ -54,6 +58,8 @@ public class Teste {
 			provar("foobar", engine);
 			provar("testeDeOrdem", engine);
 			provar("var1", engine);
+			provar("str", engine);
+			provar("testeObj", engine);
 
 			/*
 			 * List variables = KnowledgeBase.getInstance().getAllVariables();
@@ -129,4 +135,7 @@ public class Teste {
 		LoggerGenerator.info(TracerImpl.getInstance().getMessage());
 	}
 
+	public static String foobar() {
+		return "foobar moral!!";
+	}
 }

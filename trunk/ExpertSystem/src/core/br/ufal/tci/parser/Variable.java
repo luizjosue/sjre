@@ -153,24 +153,25 @@ public class Variable implements Cloneable {
 		}
 
 		Value<Interval> ivvalue = ValueUtils.getIntervalValue(value);
-		if (value.isInteger()
-				&& ((type instanceof IntegerType) || (type instanceof RealType))) {
-			return true;
+		if (value != null) {
+			if (value.isInteger()
+					&& ((type instanceof IntegerType) || (type instanceof RealType))) {
+				return true;
+			}
+			if (value.isReal()
+					&& ((type instanceof IntegerType) || (type instanceof RealType))) {
+				return true;
+			}
+			if (value.isBoolean() && (type instanceof BooleanType)) {
+				return true;
+			}
+			if (value.isString() && (type instanceof StringType)) {
+				return true;
+			}
+			if (value.isObject() && (type instanceof ObjectType)) {
+				return true;
+			}
 		}
-		if (value.isReal()
-				&& ((type instanceof IntegerType) || (type instanceof RealType))) {
-			return true;
-		}
-		if (value.isBoolean() && (type instanceof BooleanType)) {
-			return true;
-		}
-		if (value.isString() && (type instanceof StringType)) {
-			return true;
-		}
-		if (value.isObject() && (type instanceof ObjectType)) {
-			return true;
-		}
-
 		if (ivvalue != null) {
 			return Type.match(ivvalue.getValue().getType(), type);
 		}
