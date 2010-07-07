@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.ufal.tci.logger.LoggerGenerator;
-import br.ufal.tci.ui.UserInterfaceImpl;
 import br.ufal.tci.ui.UserInterface;
+import br.ufal.tci.ui.UserInterfaceImpl;
 
 /*
  * Created on 04/09/2004
@@ -39,9 +39,10 @@ public class HandlerObject implements HandlerObjectIF {
 	 * "java.lang.Integer" Object[] : Arrayy de Objects contendo os valores dos
 	 * parametros do Construtor
 	 */
-
 	public HandlerObject(String className, String[] parameterType,
-			Object[] parameterConstructor) {
+			Object[] parameterConstructor) throws InvocationTargetException,
+			ClassNotFoundException, IllegalAccessException,
+			InstantiationException, NoSuchMethodException {
 		this.userInterface = new UserInterfaceImpl();
 		Class<?>[] parameter = new Class[parameterType.length];
 		int i;
@@ -55,18 +56,24 @@ public class HandlerObject implements HandlerObjectIF {
 		} catch (InvocationTargetException te) {
 			te.printStackTrace();
 			this.userInterface.showErrorMessage(te.getMessage());
+			throw te;
 		} catch (ClassNotFoundException ce) {
 			ce.printStackTrace();
 			this.userInterface.showErrorMessage(ce.getMessage());
+			throw ce;
 		} catch (IllegalAccessException ae) {
 			ae.printStackTrace();
 			this.userInterface.showErrorMessage(ae.getMessage());
+			throw ae;
 		} catch (InstantiationException ie) {
 			ie.printStackTrace();
 			this.userInterface.showErrorMessage(ie.getMessage());
+			throw ie;
 		} catch (NoSuchMethodException me) {
 			me.printStackTrace();
 			this.userInterface.showErrorMessage(me.getMessage());
+			throw me;
+
 		}
 	}
 
@@ -82,8 +89,9 @@ public class HandlerObject implements HandlerObjectIF {
 	 * String className : Nome da classe que sera carregada, caminho completo:
 	 * "java.lang.Integer"
 	 */
-
-	public HandlerObject(String className) {
+	public HandlerObject(String className) throws ClassNotFoundException,
+			IllegalAccessException, InstantiationException,
+			NoSuchMethodException, InvocationTargetException {
 		this.userInterface = new UserInterfaceImpl();
 		try {
 			this.className = className;
@@ -93,18 +101,23 @@ public class HandlerObject implements HandlerObjectIF {
 		} catch (ClassNotFoundException ce) {
 			ce.printStackTrace();
 			this.userInterface.showErrorMessage(ce.getMessage());
+			throw ce;
 		} catch (IllegalAccessException ae) {
 			ae.printStackTrace();
 			this.userInterface.showErrorMessage(ae.getMessage());
+			throw ae;
 		} catch (InstantiationException ie) {
 			ie.printStackTrace();
 			this.userInterface.showErrorMessage(ie.getMessage());
+			throw ie;
 		} catch (NoSuchMethodException me) {
 			me.printStackTrace();
 			this.userInterface.showErrorMessage(me.getMessage());
+			throw me;
 		} catch (InvocationTargetException te) {
 			te.printStackTrace();
 			LoggerGenerator.debug(te.getMessage());
+			throw te;
 		}
 	}
 
@@ -117,7 +130,9 @@ public class HandlerObject implements HandlerObjectIF {
 	}
 
 	public Object methodCall(String fieldName, String fieldType,
-			Object fieldValue) {
+			Object fieldValue) throws ClassNotFoundException,
+			NoSuchMethodException, IllegalAccessException,
+			InvocationTargetException {
 		Method method;
 		Class<?>[] parameter = new Class[1];
 		Object[] value = new Object[1];
@@ -135,21 +150,26 @@ public class HandlerObject implements HandlerObjectIF {
 		} catch (ClassNotFoundException ce) {
 			ce.printStackTrace();
 			this.userInterface.showErrorMessage(ce.getMessage());
+			throw ce;
 		} catch (NoSuchMethodException me) {
 			me.printStackTrace();
 			this.userInterface.showErrorMessage(me.getMessage());
+			throw me;
 		} catch (IllegalAccessException ae) {
 			ae.printStackTrace();
 			this.userInterface.showErrorMessage(ae.getMessage());
+			throw ae;
 		} catch (InvocationTargetException te) {
 			te.printStackTrace();
 			this.userInterface.showErrorMessage(te.getMessage());
+			throw te;
 		}
-		return null;
 	}
 
 	public Object methodCall(String methodName, String[] parameterType,
-			Object[] parameterValue) {
+			Object[] parameterValue) throws ClassNotFoundException,
+			NoSuchMethodException, IllegalAccessException,
+			InvocationTargetException {
 		Method method;
 		Class<?>[] parameter = new Class[parameterType.length];
 		try {
@@ -162,104 +182,129 @@ public class HandlerObject implements HandlerObjectIF {
 		} catch (ClassNotFoundException ce) {
 			ce.printStackTrace();
 			this.userInterface.showErrorMessage(ce.getMessage());
+			throw ce;
 		} catch (NoSuchMethodException me) {
 			me.printStackTrace();
 			this.userInterface.showErrorMessage(me.getMessage());
+			throw me;
 		} catch (IllegalAccessException ae) {
 			ae.printStackTrace();
 			this.userInterface.showErrorMessage(ae.getMessage());
+			throw ae;
 		} catch (InvocationTargetException te) {
 			te.printStackTrace();
 			this.userInterface.showErrorMessage(te.getMessage());
+			throw te;
 		}
-		return null;
 	}
 
-	public Object methodCall(String methodName) {
+	public Object methodCall(String methodName) throws ClassNotFoundException,
+			NoSuchMethodException, IllegalAccessException,
+			InvocationTargetException {
 		try {
-			return Class.forName(this.className).getMethod(methodName, (Class<?>)null)
-					.invoke(this.object, (Object)null);
+			return Class.forName(this.className).getMethod(methodName,
+					(Class<?>) null).invoke(this.object, (Object) null);
 		} catch (ClassNotFoundException ce) {
 			ce.printStackTrace();
 			this.userInterface.showErrorMessage(ce.getMessage());
+			throw ce;
 		} catch (NoSuchMethodException me) {
 			me.printStackTrace();
 			this.userInterface.showErrorMessage(me.getMessage());
+			throw me;
 		} catch (IllegalAccessException ae) {
 			ae.printStackTrace();
 			this.userInterface.showErrorMessage(ae.getMessage());
+			throw ae;
 		} catch (InvocationTargetException te) {
 			te.printStackTrace();
 			this.userInterface.showErrorMessage(te.getMessage());
+			throw te;
 		}
-		return null;
 	}
 
 	public static void main(String args[]) {
-		/* Um Vector para conter os objetos da classe HandlerObject */
-		List<HandlerObject> hObject = new LinkedList<HandlerObject>();
+		try {
+			/* Um Vector para conter os objetos da classe HandlerObject */
+			List<HandlerObject> hObject = new LinkedList<HandlerObject>();
 
-		/* Instancia de Marcos Fábio */
-		Object[] parametersValue = new Object[3];
-		parametersValue[0] = new String("Marcos Fábio");
-		parametersValue[1] = new Float(8.5);
-		parametersValue[2] = new Float(9);
+			/* Instancia de Marcos Fábio */
+			Object[] parametersValue = new Object[3];
+			parametersValue[0] = new String("Marcos Fábio");
+			parametersValue[1] = new Float(8.5);
+			parametersValue[2] = new Float(9);
 
-		String[] parametersType = new String[3];
-		parametersType[0] = "java.lang.String";
-		parametersType[1] = "java.lang.Float";
-		parametersType[2] = "java.lang.Float";
+			String[] parametersType = new String[3];
+			parametersType[0] = "java.lang.String";
+			parametersType[1] = "java.lang.Float";
+			parametersType[2] = "java.lang.Float";
 
-		hObject.add(new HandlerObject("Classes.Aluno", parametersType,
-				parametersValue));
+			hObject.add(new HandlerObject("Classes.Aluno", parametersType,
+					parametersValue));
 
-		/*
-		 * variable: int : val1 object : umAluno
-		 * 
-		 * fact: val1 = 8 umAluno = new Classes.Aluno("Marcos",10,val1)
-		 */
+			/*
+			 * variable: int : val1 object : umAluno
+			 * 
+			 * fact: val1 = 8 umAluno = new Classes.Aluno("Marcos",10,val1)
+			 */
 
-		/* Instancia de Luiz Josue */
+			/* Instancia de Luiz Josue */
 
-		hObject.add(new HandlerObject("Classes.Aluno"));
+			hObject.add(new HandlerObject("Classes.Aluno"));
 
-		/* Instancia de Ulisses Silva */
+			/* Instancia de Ulisses Silva */
 
-		hObject.add(new HandlerObject("Classes.Aluno"));
+			hObject.add(new HandlerObject("Classes.Aluno"));
 
-		/* Instancia de Pessoa */
+			/* Instancia de Pessoa */
 
-		hObject.add(new HandlerObject("Classes.Pessoa"));
+			hObject.add(new HandlerObject("Classes.Pessoa"));
 
-		/* Um objeto auxiliar de HandlerObjectIF */
-		HandlerObjectIF ho = (HandlerObjectIF) hObject.get(3);
-		ho.methodCall("nome", "java.lang.String", "José");
+			/* Um objeto auxiliar de HandlerObjectIF */
+			HandlerObjectIF ho = (HandlerObjectIF) hObject.get(3);
+			ho.methodCall("nome", "java.lang.String", "José");
 
-		ho = (HandlerObjectIF) hObject.get(1);
+			ho = (HandlerObjectIF) hObject.get(1);
 
-		parametersType = new String[2];
-		parametersType[0] = "java.lang.Float";
-		parametersType[1] = "java.lang.Float";
+			parametersType = new String[2];
+			parametersType[0] = "java.lang.Float";
+			parametersType[1] = "java.lang.Float";
 
-		parametersValue = new Object[2];
-		parametersValue[0] = new Float(10);
-		parametersValue[1] = new Float(7);
+			parametersValue = new Object[2];
+			parametersValue[0] = new Float(10);
+			parametersValue[1] = new Float(7);
 
-		ho.methodCall("nome", "java.lang.String", "Luiz Josué");
-		ho.methodCall("setNotas", parametersType, parametersValue);
+			ho.methodCall("nome", "java.lang.String", "Luiz Josué");
+			ho.methodCall("setNotas", parametersType, parametersValue);
 
-		ho = (HandlerObjectIF) hObject.get(2);
+			ho = (HandlerObjectIF) hObject.get(2);
 
-		parametersValue[0] = new Float(10);
-		parametersValue[1] = new Float(9);
+			parametersValue[0] = new Float(10);
+			parametersValue[1] = new Float(9);
 
-		ho.methodCall("nome", "java.lang.String", "Miguel Costa");
-		ho.methodCall("setNotas", parametersType, parametersValue);
+			ho.methodCall("nome", "java.lang.String", "Miguel Costa");
+			ho.methodCall("setNotas", parametersType, parametersValue);
 
-		for (HandlerObject handlerObject : hObject) {
-			ho = handlerObject;
-			LoggerGenerator.debug(ho.methodCall("getNome").toString());
-			LoggerGenerator.debug(ho.methodCall("getMedia").toString());
+			for (HandlerObject handlerObject : hObject) {
+				ho = handlerObject;
+				LoggerGenerator.debug(ho.methodCall("getNome").toString());
+				LoggerGenerator.debug(ho.methodCall("getMedia").toString());
+			}
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

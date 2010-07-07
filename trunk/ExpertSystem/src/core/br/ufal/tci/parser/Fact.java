@@ -4,6 +4,7 @@
  */
 package br.ufal.tci.parser;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -118,78 +119,7 @@ public class Fact {
 	public Value<?> evaluate(InferenceEngineIF engine)
 			throws SemanticException, MissingElementException {
 		if (this.objectInstantiation != null) {
-			String packageName = "";
-			List<String> parameters = new LinkedList<String>();
-			List<Value<?>> parametersValue = new LinkedList<Value<?>>();
-
-			String objectName = "";
-
-			/* Trata o pacote */
-			if (this.objectInstantiation.getPackageAndName() != null
-					&& !this.objectInstantiation.getPackageAndName().isEmpty()) {
-
-				objectName = this.objectInstantiation.getPackageAndName()
-						.iterator().next().toString();
-
-				/* Trata o pacote */
-				int cont = 0;
-				for (Unit unit : this.objectInstantiation.getPackageAndName()) {
-					if (cont == 0) {
-						cont++;
-						continue;
-					}
-					packageName += (unit.toString() + ".");
-					cont++;
-				}
-				packageName = packageName
-						.substring(0, packageName.length() - 1);
-
-				/* Trata os parametros */
-				for (Unit unit : this.objectInstantiation.getArgumentList()) {
-					Argument argument = (Argument) unit;
-					if (!argument.isMethodCall()) {
-						ordinaryCall(argument, parameters, parametersValue,
-								engine);
-					} else {
-						// TODO Tratar chamada de metodo */
-					}
-
-					this.identifier = new Identifier(objectName);
-					String[] aux = new String[parameters.size()];
-					for (int j = 0; j < parameters.size(); j++) {
-						aux[j] = (String) parameters.get(j);
-					}
-					// this.handler =
-					new HandlerObject(packageName, aux, parametersValue
-							.toArray());
-
-					/* Chamada a interface que trata instanciacao de objetos */
-					LoggerGenerator.debug("Nome do objeto: " + objectName);
-					LoggerGenerator.debug("Nome do pacote: " + packageName);
-					// Iterator foo1 = parameters.iterator();
-					// Iterator foo2 = parametersValue.iterator();
-					// Object obj1;
-					// Object obj2;
-					// while (foo1.hasNext()) {
-					// obj1 = foo1.next();
-					// obj2 = foo2.next();
-					// LoggerGenerator.debug("Tipo: " + obj1 + " Valor: " +
-					// unit);
-					// }
-				}
-
-				/* Chamada a interface que trata instanciacao de objetos */
-				LoggerGenerator.debug("Nome do objeto: " + objectName);
-				LoggerGenerator.debug("Nome do pacote: " + packageName);
-
-				String[] aux = new String[parameters.size()];
-				for (int j = 0; j < parameters.size(); j++) {
-					aux[j] = (String) parameters.get(j);
-				}
-				HandlerObject handler = new HandlerObject(packageName, aux,
-						parametersValue.toArray());
-				LoggerGenerator.debug("Handler instanciado " + handler);
-			}
+			tratarObjetos(engine);
 		} else {
 			Value<?> value = null;
 			Variable variable = SymbolTable.getInstance().lookup(
@@ -274,6 +204,100 @@ public class Fact {
 			}
 		}
 		return null;
+	}
+
+	private void tratarObjetos(InferenceEngineIF engine)
+			throws MissingElementException, SemanticException {
+
+		try {
+			String packageName = "";
+			List<String> parameters = new LinkedList<String>();
+			List<Value<?>> parametersValue = new LinkedList<Value<?>>();
+
+			String objectName = "";
+
+			/* Trata o pacote */
+			if (this.objectInstantiation.getPackageAndName() != null
+					&& !this.objectInstantiation.getPackageAndName().isEmpty()) {
+
+				objectName = this.objectInstantiation.getPackageAndName()
+						.iterator().next().toString();
+
+				/* Trata o pacote */
+				int cont = 0;
+				for (Unit unit : this.objectInstantiation.getPackageAndName()) {
+					if (cont == 0) {
+						cont++;
+						continue;
+					}
+					packageName += (unit.toString() + ".");
+					cont++;
+				}
+				packageName = packageName
+						.substring(0, packageName.length() - 1);
+
+				/* Trata os parametros */
+				for (Unit unit : this.objectInstantiation.getArgumentList()) {
+					Argument argument = (Argument) unit;
+					if (!argument.isMethodCall()) {
+						ordinaryCall(argument, parameters, parametersValue,
+								engine);
+					} else {
+						// TODO Tratar chamada de metodo */
+					}
+
+					this.identifier = new Identifier(objectName);
+					String[] aux = new String[parameters.size()];
+					for (int j = 0; j < parameters.size(); j++) {
+						aux[j] = (String) parameters.get(j);
+					}
+					// this.handler =
+					new HandlerObject(packageName, aux, parametersValue
+							.toArray());
+
+					/* Chamada a interface que trata instanciacao de objetos */
+					LoggerGenerator.debug("Nome do objeto: " + objectName);
+					LoggerGenerator.debug("Nome do pacote: " + packageName);
+					// Iterator foo1 = parameters.iterator();
+					// Iterator foo2 = parametersValue.iterator();
+					// Object obj1;
+					// Object obj2;
+					// while (foo1.hasNext()) {
+					// obj1 = foo1.next();
+					// obj2 = foo2.next();
+					// LoggerGenerator.debug("Tipo: " + obj1 + " Valor: " +
+					// unit);
+					// }
+				}
+
+				/* Chamada a interface que trata instanciacao de objetos */
+				LoggerGenerator.debug("Nome do objeto: " + objectName);
+				LoggerGenerator.debug("Nome do pacote: " + packageName);
+
+				String[] aux = new String[parameters.size()];
+				for (int j = 0; j < parameters.size(); j++) {
+					aux[j] = (String) parameters.get(j);
+				}
+				HandlerObject handler = new HandlerObject(packageName, aux,
+						parametersValue.toArray());
+				LoggerGenerator.debug("Handler instanciado " + handler);
+			}
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+			throw new SemanticException(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			throw new SemanticException(e.getMessage());
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			throw new SemanticException(e.getMessage());
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+			throw new SemanticException(e.getMessage());
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			throw new SemanticException(e.getMessage());
+		}
 	}
 
 	private void ordinaryCall(Argument argument, List<String> parameters,
