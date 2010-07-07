@@ -22,7 +22,7 @@ public class ValueUtils {
 
 	public static Value<Interval> getIntervalValue(Value<?> value) {
 		Value<Interval> result = null;
-		if (value.getValue() instanceof Interval) {
+		if (value != null && value.getValue() instanceof Interval) {
 			result = new Value<Interval>((Interval) value.getValue());
 		}
 		return result;

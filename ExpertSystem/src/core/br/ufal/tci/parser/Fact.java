@@ -132,8 +132,14 @@ public class Fact {
 						.iterator().next().toString();
 
 				/* Trata o pacote */
+				int cont = 0;
 				for (Unit unit : this.objectInstantiation.getPackageAndName()) {
+					if (cont == 0) {
+						cont++;
+						continue;
+					}
 					packageName += (unit.toString() + ".");
+					cont++;
 				}
 				packageName = packageName
 						.substring(0, packageName.length() - 1);
@@ -171,6 +177,18 @@ public class Fact {
 					// unit);
 					// }
 				}
+
+				/* Chamada a interface que trata instanciacao de objetos */
+				LoggerGenerator.debug("Nome do objeto: " + objectName);
+				LoggerGenerator.debug("Nome do pacote: " + packageName);
+
+				String[] aux = new String[parameters.size()];
+				for (int j = 0; j < parameters.size(); j++) {
+					aux[j] = (String) parameters.get(j);
+				}
+				HandlerObject handler = new HandlerObject(packageName, aux,
+						parametersValue.toArray());
+				LoggerGenerator.debug("Handler instanciado " + handler);
 			}
 		} else {
 			Value<?> value = null;
