@@ -7,7 +7,7 @@ package br.ufal.tci.parser;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.MissingElementException;
 import br.ufal.tci.exception.SemanticException;
 
@@ -34,7 +34,7 @@ public class Head {
 	 * 
 	 * @throws MissingElementException
 	 * */
-	public void evaluate(InferenceEngineIF engine) throws SemanticException,
+	public void evaluate(InferenceEngine engine) throws SemanticException,
 			MissingElementException {
 		if (conclusionList != null && !conclusionList.isEmpty()) {
 			for (Fact fact : conclusionList) {

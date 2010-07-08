@@ -2,7 +2,7 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=true,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 package br.ufal.tci.JJTREE;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.logger.LoggerGenerator;
 
@@ -72,7 +72,7 @@ public class SimpleNode implements Node {
 	 * @throws SemanticException
 	 **/
 	public Object jjtAccept(Parser_1Visitor visitor, Object data,
-			InferenceEngineIF engine) throws SemanticException {
+			InferenceEngine engine) throws SemanticException {
 		return visitor.visit(this, data, engine);
 	}
 
@@ -82,7 +82,7 @@ public class SimpleNode implements Node {
 	 * @throws SemanticException
 	 **/
 	public Object childrenAccept(Parser_1Visitor visitor, Object data,
-			InferenceEngineIF engine) throws SemanticException {
+			InferenceEngine engine) throws SemanticException {
 		if (children != null) {
 			for (int i = 0; i < children.length; ++i) {
 				children[i].jjtAccept(visitor, data, engine);

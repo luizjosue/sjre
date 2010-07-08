@@ -8,7 +8,7 @@ package br.ufal.tci.parser;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.MissingElementException;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.messages.MessageUtil;
@@ -69,7 +69,7 @@ public class VariableList {
 	}
 
 	public void addElementSkipValidation(Identifier variable,
-			InferenceEngineIF engine) throws SemanticException {
+			InferenceEngine engine) throws SemanticException {
 		if (this.identifiers.contains(variable)) {
 			throw new SemanticException(MessageUtil.VARIABLE_ALREADY_DECLARED);
 		} else {
@@ -77,7 +77,7 @@ public class VariableList {
 		}
 	}
 
-	private void addVariable(Identifier variable, InferenceEngineIF engine)
+	private void addVariable(Identifier variable, InferenceEngine engine)
 			throws SemanticException {
 		Variable variable2 = new Variable();
 		variable2.setIdentifier(variable);
@@ -98,7 +98,7 @@ public class VariableList {
 		this.identifiers.add(variable);
 	}
 
-	public void addElement(Identifier variable, InferenceEngineIF engine)
+	public void addElement(Identifier variable, InferenceEngine engine)
 			throws SemanticException, MissingElementException {
 		if (this.identifiers.contains(variable)) {
 			throw new SemanticException(MessageUtil.VARIABLE_ALREADY_DECLARED);

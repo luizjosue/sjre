@@ -4,7 +4,7 @@
  */
 package br.ufal.tci.parser;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.expression.IfExpression;
 import br.ufal.tci.value.Value;
@@ -41,7 +41,7 @@ public class Body {
 	 * Método que avalia o body de acordo com o motor 
 	 * de inferência passado como parãmetro
 	 * */
-	public Value<?> evaluate(InferenceEngineIF engine) throws SemanticException{
+	public Value<?> evaluate(InferenceEngine engine) throws SemanticException{
 		return this.expression.evaluate(engine);
 	}
 

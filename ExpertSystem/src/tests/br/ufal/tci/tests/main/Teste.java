@@ -6,7 +6,7 @@ package br.ufal.tci.tests.main;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import br.ufal.tci.InferenceEngine.InferenceEngine;
+import br.ufal.tci.InferenceEngine.InferenceEngineImpl;
 import br.ufal.tci.InferenceEngine.InterpreterImpl;
 import br.ufal.tci.InferenceEngine.KnowledgeBaseImpl;
 import br.ufal.tci.exception.MissingElementException;
@@ -23,7 +23,7 @@ import br.ufal.tci.value.Value;
  */
 public class Teste {
 
-	public Teste(String foo) {
+	public Teste() {
 		System.out.println("teste de instanciacao");
 	}
 
@@ -31,7 +31,7 @@ public class Teste {
 
 		String fileName;
 		InterpreterImpl interpreter;
-		InferenceEngine engine;
+		InferenceEngineImpl engine;
 
 		fileName = "./doc/teste.p1";
 
@@ -39,7 +39,7 @@ public class Teste {
 			LoggerGenerator.info("Antes");
 			interpreter = new InterpreterImpl(new FileInputStream(fileName));
 			LoggerGenerator.info("Depois 1");
-			engine = new InferenceEngine(interpreter, KnowledgeBaseImpl
+			engine = new InferenceEngineImpl(interpreter, KnowledgeBaseImpl
 					.getInstance());
 			engine.setTracer(TracerImpl.getInstance());
 			interpreter.createParserTree(engine);
@@ -117,7 +117,7 @@ public class Teste {
 		 */
 	}
 
-	private static void provar(String var, InferenceEngine engine)
+	private static void provar(String var, InferenceEngineImpl engine)
 			throws MissingElementException, SemanticException {
 		Object p = engine.findValue(engine.findVariable(var, engine));
 		if (p instanceof Pair) {

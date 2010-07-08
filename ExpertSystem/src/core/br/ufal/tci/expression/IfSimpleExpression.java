@@ -4,7 +4,7 @@
  */
 package br.ufal.tci.expression;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.operator.additive.AdditiveOperator;
 import br.ufal.tci.operator.additive.Or;
@@ -98,7 +98,7 @@ public class IfSimpleExpression extends Expression {
 	 * br.ufal.tci.expression.Expression#evaluate(br.ufal.tci.InferenceEngine
 	 * .InferenceEngineIF)
 	 */
-	public Value<?> evaluate(InferenceEngineIF engine) throws SemanticException {
+	public Value<?> evaluate(InferenceEngine engine) throws SemanticException {
 		if (this.moreSimpleExpression != null) {
 			if (this.moreSimpleExpression.getOperator() != null) {
 				return this.moreSimpleExpression.getOperator().evaluate(

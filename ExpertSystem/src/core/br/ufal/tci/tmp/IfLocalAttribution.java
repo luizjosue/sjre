@@ -4,7 +4,7 @@
  */
 package br.ufal.tci.tmp;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.MissingElementException;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.expression.IfExpression;
@@ -65,7 +65,7 @@ public class IfLocalAttribution {
 	/**
 	 * @param expression
 	 */
-	public void setExpression(IfExpression expression, InferenceEngineIF engine)
+	public void setExpression(IfExpression expression, InferenceEngine engine)
 			throws SemanticException {
 		try {
 			Variable variable = SymbolTable.getInstance().lookup(
@@ -97,7 +97,7 @@ public class IfLocalAttribution {
 	/**
 	 * @param identifier
 	 */
-	public void setIdentifier(Identifier identifier, InferenceEngineIF engine)
+	public void setIdentifier(Identifier identifier, InferenceEngine engine)
 			throws SemanticException {
 
 		Variable variable = null;
@@ -124,7 +124,7 @@ public class IfLocalAttribution {
 		return this.expression.getType();
 	}
 
-	public Value<?> evaluate(InferenceEngineIF engine) throws SemanticException {
+	public Value<?> evaluate(InferenceEngine engine) throws SemanticException {
 		Value<?> value = this.expression.evaluate(engine);
 		Variable variable = null;
 		try {

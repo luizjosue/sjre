@@ -4,7 +4,7 @@
  */
 package br.ufal.tci.tmp;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.type.Type;
 import br.ufal.tci.value.Value;
@@ -41,7 +41,7 @@ public class IfLocalDeclaration {
 		return this.attribution.getType();
 	}
 
-	public Value<?> evaluate(InferenceEngineIF engine) throws SemanticException {
+	public Value<?> evaluate(InferenceEngine engine) throws SemanticException {
 		return this.attribution.evaluate(engine);
 	}
 }

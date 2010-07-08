@@ -6,7 +6,7 @@
  */
 package br.ufal.tci.expression;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.type.Type;
 import br.ufal.tci.value.Value;
@@ -28,7 +28,7 @@ public abstract class Expression {
 		this.type = null;
 	}
 
-	public abstract Value<?> evaluate(InferenceEngineIF engine)
+	public abstract Value<?> evaluate(InferenceEngine engine)
 			throws SemanticException;
 
 	/**

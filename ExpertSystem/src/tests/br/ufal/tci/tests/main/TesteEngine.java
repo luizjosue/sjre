@@ -7,7 +7,7 @@
 package br.ufal.tci.tests.main;
 
 import br.ufal.tci.HandlerObject.HandlerObject;
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.InferenceEngine.KnowledgeBase;
 import br.ufal.tci.exception.MissingElementException;
 import br.ufal.tci.exception.SemanticException;
@@ -21,7 +21,7 @@ import br.ufal.tci.value.Value;
  * 
  * 
  */
-public class TesteEngine implements InferenceEngineIF {
+public class TesteEngine implements InferenceEngine {
 
 	/*
 	 * (non-Javadoc)
@@ -138,7 +138,7 @@ public class TesteEngine implements InferenceEngineIF {
 	 * br.ufal.tci.InferenceEngine.InferenceEngineIF#findVariable(java.lang.
 	 * String, br.ufal.tci.InferenceEngine.InferenceEngineIF)
 	 */
-	public Variable findVariable(String variableName, InferenceEngineIF engine)
+	public Variable findVariable(String variableName, InferenceEngine engine)
 			throws MissingElementException, SemanticException {
 		// TODO Auto-generated method stub
 		return null;

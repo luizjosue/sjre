@@ -6,7 +6,7 @@
  */
 package br.ufal.tci.term;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.factor.ThenFactor;
 import br.ufal.tci.type.Type;
@@ -64,7 +64,7 @@ public class ThenTerm extends Term {
 	 * br.ufal.tci.term.Term#evaluate(br.ufal.tci.InferenceEngine.InferenceEngineIF
 	 * )
 	 */
-	public Value<?> evaluate(InferenceEngineIF engine) throws SemanticException {
+	public Value<?> evaluate(InferenceEngine engine) throws SemanticException {
 		if (this.thenMoreTerms != null) {
 			if (this.thenMoreTerms.getOperator() != null) {
 				return this.thenMoreTerms.getOperator().evaluate(

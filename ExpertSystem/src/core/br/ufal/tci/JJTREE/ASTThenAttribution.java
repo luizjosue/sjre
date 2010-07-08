@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.MissingElementException;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.expression.ThenSimpleExpression;
@@ -33,7 +33,7 @@ public class ASTThenAttribution extends SimpleNode {
 
 	/** Accept the visitor. **/
 	public Object jjtAccept(Parser_1Visitor visitor, Object data,
-			InferenceEngineIF engine) throws SemanticException {
+			InferenceEngine engine) throws SemanticException {
 		LoggerGenerator
 				.debug("Visitando " + this.getClass().getCanonicalName());
 		try {

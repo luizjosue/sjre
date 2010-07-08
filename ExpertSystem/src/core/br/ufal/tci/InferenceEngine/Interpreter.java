@@ -37,14 +37,14 @@ public interface Interpreter {
 	 * Dispara o body da regra passada como parâmetro de acordo com a máquina de
 	 * inferência passada como parâmetro
 	 * */
-	public boolean fireBody(InferenceEngineIF engine, Rule rule)
+	public boolean fireBody(InferenceEngine engine, Rule rule)
 			throws SemanticException;
 
 	/**
 	 * Dispara o head da regra passada como parâmetro de acordo com a máquina de
 	 * inferência passada como parâmetro
 	 * */
-	public void fireHead(InferenceEngineIF engine, Rule rule)
+	public void fireHead(InferenceEngine engine, Rule rule)
 			throws SemanticException;
 
 	/**

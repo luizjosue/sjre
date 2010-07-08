@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.ufal.tci.logger.LoggerGenerator;
-import br.ufal.tci.ui.UserInterface;
-import br.ufal.tci.ui.UserInterfaceImpl;
 
 /*
  * Created on 04/09/2004
@@ -18,14 +16,13 @@ import br.ufal.tci.ui.UserInterfaceImpl;
  */
 
 /*
- * A classe HandlerObjectImpl representa realmente um objeto, cada instancia desta
- * classe representa uma instancia de um objeto na Maquina de Inferencia e
+ * A classe HandlerObjectImpl representa realmente um objeto, cada instancia
+ * desta classe representa uma instancia de um objeto na Maquina de Inferencia e
  * possui metodos para manipular os metodos do objeto que representa
  */
 public class HandlerObjectImpl implements HandlerObject {
 	private Object object;
 	private String className;
-	public UserInterface userInterface;
 
 	/*
 	 * Construtor da classe HandlerObject Onde sera instanciado o objeto
@@ -43,7 +40,6 @@ public class HandlerObjectImpl implements HandlerObject {
 			Object[] parameterConstructor) throws InvocationTargetException,
 			ClassNotFoundException, IllegalAccessException,
 			InstantiationException, NoSuchMethodException {
-		this.userInterface = new UserInterfaceImpl();
 		Class<?>[] parameter = new Class[parameterType.length];
 		int i;
 		try {
@@ -53,26 +49,22 @@ public class HandlerObjectImpl implements HandlerObject {
 			this.className = className;
 			this.object = Class.forName(className).getConstructor(parameter)
 					.newInstance(parameterConstructor);
-		} catch (InvocationTargetException te) {
-			te.printStackTrace();
-			this.userInterface.showErrorMessage(te.getMessage());
-			throw te;
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
-			this.userInterface.showErrorMessage(ce.getMessage());
-			throw ce;
-		} catch (IllegalAccessException ae) {
-			ae.printStackTrace();
-			this.userInterface.showErrorMessage(ae.getMessage());
-			throw ae;
-		} catch (InstantiationException ie) {
-			ie.printStackTrace();
-			this.userInterface.showErrorMessage(ie.getMessage());
-			throw ie;
-		} catch (NoSuchMethodException me) {
-			me.printStackTrace();
-			this.userInterface.showErrorMessage(me.getMessage());
-			throw me;
+		} catch (InvocationTargetException e) {
+			LoggerGenerator.debug("InvocationTargetException::"
+					+ e.getMessage());
+			throw e;
+		} catch (ClassNotFoundException e) {
+			LoggerGenerator.debug("ClassNotFoundException::" + e.getMessage());
+			throw e;
+		} catch (IllegalAccessException e) {
+			LoggerGenerator.debug("IllegalAccessException::" + e.getMessage());
+			throw e;
+		} catch (InstantiationException e) {
+			LoggerGenerator.debug("InstantiationException::" + e.getMessage());
+			throw e;
+		} catch (NoSuchMethodException e) {
+			LoggerGenerator.debug("NoSuchMethodException::" + e.getMessage());
+			throw e;
 
 		}
 	}
@@ -92,32 +84,27 @@ public class HandlerObjectImpl implements HandlerObject {
 	public HandlerObjectImpl(String className) throws ClassNotFoundException,
 			IllegalAccessException, InstantiationException,
 			NoSuchMethodException, InvocationTargetException {
-		this.userInterface = new UserInterfaceImpl();
 		try {
 			this.className = className;
 			this.object = Class.forName(className).getConstructor(
 					(Class<?>) null).newInstance((Object[]) null);
 			this.className = className;
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
-			this.userInterface.showErrorMessage(ce.getMessage());
-			throw ce;
-		} catch (IllegalAccessException ae) {
-			ae.printStackTrace();
-			this.userInterface.showErrorMessage(ae.getMessage());
-			throw ae;
-		} catch (InstantiationException ie) {
-			ie.printStackTrace();
-			this.userInterface.showErrorMessage(ie.getMessage());
-			throw ie;
-		} catch (NoSuchMethodException me) {
-			me.printStackTrace();
-			this.userInterface.showErrorMessage(me.getMessage());
-			throw me;
-		} catch (InvocationTargetException te) {
-			te.printStackTrace();
-			LoggerGenerator.debug(te.getMessage());
-			throw te;
+		} catch (ClassNotFoundException e) {
+			LoggerGenerator.debug("ClassNotFoundException::" + e.getMessage());
+			throw e;
+		} catch (IllegalAccessException e) {
+			LoggerGenerator.debug("IllegalAccessException::" + e.getMessage());
+			throw e;
+		} catch (InstantiationException e) {
+			LoggerGenerator.debug("InstantiationException::" + e.getMessage());
+			throw e;
+		} catch (NoSuchMethodException e) {
+			LoggerGenerator.debug("NoSuchMethodException::" + e.getMessage());
+			throw e;
+		} catch (InvocationTargetException e) {
+			LoggerGenerator.debug("InvocationTargetException::"
+					+ e.getMessage());
+			throw e;
 		}
 	}
 
@@ -147,22 +134,19 @@ public class HandlerObjectImpl implements HandlerObject {
 			method = Class.forName(this.className).getMethod(methodName,
 					parameter);
 			return method.invoke(this.object, value);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
-			this.userInterface.showErrorMessage(ce.getMessage());
-			throw ce;
-		} catch (NoSuchMethodException me) {
-			me.printStackTrace();
-			this.userInterface.showErrorMessage(me.getMessage());
-			throw me;
-		} catch (IllegalAccessException ae) {
-			ae.printStackTrace();
-			this.userInterface.showErrorMessage(ae.getMessage());
-			throw ae;
-		} catch (InvocationTargetException te) {
-			te.printStackTrace();
-			this.userInterface.showErrorMessage(te.getMessage());
-			throw te;
+		} catch (ClassNotFoundException e) {
+			LoggerGenerator.debug("ClassNotFoundException::" + e.getMessage());
+			throw e;
+		} catch (NoSuchMethodException e) {
+			LoggerGenerator.debug("NoSuchMethodException::" + e.getMessage());
+			throw e;
+		} catch (IllegalAccessException e) {
+			LoggerGenerator.debug("IllegalAccessException::" + e.getMessage());
+			throw e;
+		} catch (InvocationTargetException e) {
+			LoggerGenerator.debug("InvocationTargetException::"
+					+ e.getMessage());
+			throw e;
 		}
 	}
 
@@ -179,22 +163,19 @@ public class HandlerObjectImpl implements HandlerObject {
 			method = Class.forName(this.className).getMethod(methodName,
 					parameter);
 			return method.invoke(this.object, parameterValue);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
-			this.userInterface.showErrorMessage(ce.getMessage());
-			throw ce;
-		} catch (NoSuchMethodException me) {
-			me.printStackTrace();
-			this.userInterface.showErrorMessage(me.getMessage());
-			throw me;
-		} catch (IllegalAccessException ae) {
-			ae.printStackTrace();
-			this.userInterface.showErrorMessage(ae.getMessage());
-			throw ae;
-		} catch (InvocationTargetException te) {
-			te.printStackTrace();
-			this.userInterface.showErrorMessage(te.getMessage());
-			throw te;
+		} catch (ClassNotFoundException e) {
+			LoggerGenerator.debug("ClassNotFoundException::" + e.getMessage());
+			throw e;
+		} catch (NoSuchMethodException e) {
+			LoggerGenerator.debug("NoSuchMethodException::" + e.getMessage());
+			throw e;
+		} catch (IllegalAccessException e) {
+			LoggerGenerator.debug("IllegalAccessException::" + e.getMessage());
+			throw e;
+		} catch (InvocationTargetException e) {
+			LoggerGenerator.debug("InvocationTargetException::"
+					+ e.getMessage());
+			throw e;
 		}
 	}
 
@@ -204,22 +185,19 @@ public class HandlerObjectImpl implements HandlerObject {
 		try {
 			return Class.forName(this.className).getMethod(methodName,
 					(Class<?>) null).invoke(this.object, (Object) null);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
-			this.userInterface.showErrorMessage(ce.getMessage());
-			throw ce;
-		} catch (NoSuchMethodException me) {
-			me.printStackTrace();
-			this.userInterface.showErrorMessage(me.getMessage());
-			throw me;
-		} catch (IllegalAccessException ae) {
-			ae.printStackTrace();
-			this.userInterface.showErrorMessage(ae.getMessage());
-			throw ae;
-		} catch (InvocationTargetException te) {
-			te.printStackTrace();
-			this.userInterface.showErrorMessage(te.getMessage());
-			throw te;
+		} catch (ClassNotFoundException e) {
+			LoggerGenerator.debug("ClassNotFoundException::" + e.getMessage());
+			throw e;
+		} catch (NoSuchMethodException e) {
+			LoggerGenerator.debug("NoSuchMethodException::" + e.getMessage());
+			throw e;
+		} catch (IllegalAccessException e) {
+			LoggerGenerator.debug("IllegalAccessException::" + e.getMessage());
+			throw e;
+		} catch (InvocationTargetException e) {
+			LoggerGenerator.debug("InvocationTargetException::"
+					+ e.getMessage());
+			throw e;
 		}
 	}
 
@@ -291,19 +269,14 @@ public class HandlerObjectImpl implements HandlerObject {
 				LoggerGenerator.debug(ho.methodCall("getMedia").toString());
 			}
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
