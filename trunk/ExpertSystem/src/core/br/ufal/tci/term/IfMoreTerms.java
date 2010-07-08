@@ -4,7 +4,7 @@
  */
 package br.ufal.tci.term;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.factor.IfFactor;
 import br.ufal.tci.operator.multiplicative.And;
@@ -82,7 +82,7 @@ public class IfMoreTerms extends Term {
 	 * br.ufal.tci.term.Term#evaluate(br.ufal.tci.InferenceEngine.InferenceEngineIF
 	 * )
 	 */
-	public Value<?> evaluate(InferenceEngineIF engine) throws SemanticException {
+	public Value<?> evaluate(InferenceEngine engine) throws SemanticException {
 		if (this.terms != null) {
 			if (this.terms.getOperator() != null) {
 				return this.terms.getOperator().evaluate(

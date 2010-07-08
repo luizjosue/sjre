@@ -5,7 +5,7 @@ package br.ufal.tci.JJTREE;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.logger.LoggerGenerator;
 import br.ufal.tci.parser.ObjectInstance;
@@ -23,7 +23,7 @@ public class ASTArgumentList extends SimpleNode {
 	/** Accept the visitor. **/
 	@SuppressWarnings("unchecked")
 	public Object jjtAccept(Parser_1Visitor visitor, Object data,
-			InferenceEngineIF engine) throws SemanticException {
+			InferenceEngine engine) throws SemanticException {
 		LoggerGenerator.debug("Visitando " + this.getClass().getCanonicalName());
 		if (data instanceof ObjectInstance) {
 			ObjectInstance instance = (ObjectInstance) data;

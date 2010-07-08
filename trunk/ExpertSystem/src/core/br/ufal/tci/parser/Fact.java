@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.ufal.tci.HandlerObject.HandlerObjectImpl;
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.InvalidDataException;
 import br.ufal.tci.exception.MissingElementException;
 import br.ufal.tci.exception.SemanticException;
@@ -67,7 +67,7 @@ public class Fact {
 	/**
 	 * @param identifier
 	 */
-	public void setIdentifier(Identifier identifier, InferenceEngineIF engine)
+	public void setIdentifier(Identifier identifier, InferenceEngine engine)
 			throws SemanticException, MissingElementException {
 		if (SymbolTable.getInstance().lookup(identifier.getName(), engine) == null) {
 			throw new SemanticException(MessageUtil.VARIABLE_NOT_DECLARED
@@ -116,7 +116,7 @@ public class Fact {
 	 * @throws MissingElementException
 	 * 
 	 * */
-	public Value<?> evaluate(InferenceEngineIF engine)
+	public Value<?> evaluate(InferenceEngine engine)
 			throws SemanticException, MissingElementException {
 		if (this.objectInstantiation != null) {
 			tratarObjetos(engine);
@@ -206,7 +206,7 @@ public class Fact {
 		return null;
 	}
 
-	private void tratarObjetos(InferenceEngineIF engine)
+	private void tratarObjetos(InferenceEngine engine)
 			throws MissingElementException, SemanticException {
 
 		try {
@@ -278,30 +278,30 @@ public class Fact {
 				for (int j = 0; j < parameters.size(); j++) {
 					aux[j] = (String) parameters.get(j);
 				}
-				HandlerObjectImpl handler = new HandlerObjectImpl(packageName, aux,
-						parametersValue.toArray());
+				HandlerObjectImpl handler = new HandlerObjectImpl(packageName,
+						aux, parametersValue.toArray());
 				LoggerGenerator.debug("Handler instanciado " + handler);
 			}
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-			throw new SemanticException(e.getMessage());
+			throw new SemanticException(e.getClass().getName() + "::"
+					+ e.getMessage());
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new SemanticException(e.getMessage());
+			throw new SemanticException(e.getClass().getName() + "::"
+					+ e.getMessage());
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			throw new SemanticException(e.getMessage());
+			throw new SemanticException(e.getClass().getName() + "::"
+					+ e.getMessage());
 		} catch (InstantiationException e) {
-			e.printStackTrace();
-			throw new SemanticException(e.getMessage());
+			throw new SemanticException(e.getClass().getName() + "::"
+					+ e.getMessage());
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-			throw new SemanticException(e.getMessage());
+			throw new SemanticException(e.getClass().getName() + "::"
+					+ e.getMessage());
 		}
 	}
 
 	private void ordinaryCall(Argument argument, List<String> parameters,
-			List<Value<?>> parametersValue, InferenceEngineIF engine)
+			List<Value<?>> parametersValue, InferenceEngine engine)
 			throws MissingElementException, SemanticException {
 		LoggerGenerator.debug(argument.getIdentifiers());
 		if (argument != null && argument.getIdentifiers() != null

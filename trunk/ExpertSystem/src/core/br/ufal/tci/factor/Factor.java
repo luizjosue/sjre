@@ -6,7 +6,7 @@
  */
 package br.ufal.tci.factor;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.parser.Constant;
 import br.ufal.tci.parser.Variable;
@@ -55,7 +55,7 @@ public abstract class Factor {
 	 * br.ufal.tci.expression.Expression#evaluate(br.ufal.tci.InferenceEngine
 	 * .InferenceEngineIF)
 	 */
-	public abstract Value<?> evaluate(InferenceEngineIF engine)
+	public abstract Value<?> evaluate(InferenceEngine engine)
 			throws SemanticException;
 
 	/**

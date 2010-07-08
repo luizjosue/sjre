@@ -6,7 +6,7 @@
  */
 package br.ufal.tci.parser;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.MissingElementException;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.logger.LoggerGenerator;
@@ -48,7 +48,7 @@ public class Rule {
 	 * 
 	 * @throws MissingElementException
 	 * */
-	public void fire(InferenceEngineIF engine) throws SemanticException,
+	public void fire(InferenceEngine engine) throws SemanticException,
 			MissingElementException {
 
 		/* Limpa a lista de variáveis temporárias */

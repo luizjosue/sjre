@@ -64,7 +64,7 @@ public class InterpreterImpl implements Interpreter {
 	 * Analisa sintaticamente e cria a representacao intermediaria em forma de
 	 * arvore
 	 * */
-	public void createParserTree(InferenceEngineIF engine)
+	public void createParserTree(InferenceEngine engine)
 			throws SyntaticException, SemanticException {
 		ASTStart start;
 		Parser_1Visitor visitor;
@@ -145,7 +145,7 @@ public class InterpreterImpl implements Interpreter {
 	 * }
 	 */
 
-	public void fireHead(InferenceEngineIF engine, Rule rule)
+	public void fireHead(InferenceEngine engine, Rule rule)
 			throws SemanticException {
 		try {
 			rule.getStatement().getHead().evaluate(engine);
@@ -155,7 +155,7 @@ public class InterpreterImpl implements Interpreter {
 		}
 	}
 
-	public boolean fireBody(InferenceEngineIF engine, Rule rule)
+	public boolean fireBody(InferenceEngine engine, Rule rule)
 			throws SemanticException {
 
 		Value<?> value = rule.getStatement().getBody().evaluate(engine);

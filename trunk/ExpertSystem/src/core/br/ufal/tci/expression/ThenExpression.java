@@ -6,7 +6,7 @@
  */
 package br.ufal.tci.expression;
 
-import br.ufal.tci.InferenceEngine.InferenceEngineIF;
+import br.ufal.tci.InferenceEngine.InferenceEngine;
 import br.ufal.tci.exception.SemanticException;
 import br.ufal.tci.operator.relational.RelationalOperator;
 import br.ufal.tci.type.BooleanType;
@@ -91,7 +91,7 @@ public class ThenExpression extends Expression {
 	 * br.ufal.tci.expression.Expression#evaluate(br.ufal.tci.InferenceEngine
 	 * .InferensIF)
 	 */
-	public Value<?> evaluate(InferenceEngineIF engine) throws SemanticException {
+	public Value<?> evaluate(InferenceEngine engine) throws SemanticException {
 		if (this.operator != null) {
 			return this.operator.evaluate(this.simpleExpression
 					.evaluate(engine), this.thenExpression.evaluate(engine));
