@@ -154,6 +154,9 @@ public interface Parser_1Visitor {
 
 	public Object visit(ASTFact node, Object data, InferenceEngine engine)
 			throws SemanticException;
+			
+	public Object visit(ASTMethodInvocation node, Object data, InferenceEngine engine)
+			throws SemanticException;
 
 	public Object visit(ASTThenInclusiveOperator node, Object data,
 			InferenceEngine engine) throws SemanticException;

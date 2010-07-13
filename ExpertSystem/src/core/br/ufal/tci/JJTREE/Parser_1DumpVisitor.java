@@ -126,8 +126,8 @@ public class Parser_1DumpVisitor implements Parser_1Visitor {
 	 * 
 	 * @see JJTREE.Parser_1Visitor#visit(JJTREE.ASTConclusion, java.lang.Object)
 	 */
-	public Object visit(ASTConclusion node, Object data,
-			InferenceEngine engine) throws SemanticException {
+	public Object visit(ASTConclusion node, Object data, InferenceEngine engine)
+			throws SemanticException {
 		LoggerGenerator.debug(indentString() + node);
 		indent += 2;
 		data = node.childrenAccept(this, data, engine);
@@ -243,8 +243,8 @@ public class Parser_1DumpVisitor implements Parser_1Visitor {
 	 * @see JJTREE.Parser_1Visitor#visit(JJTREE.ASTIfMoreTerms,
 	 * java.lang.Object)
 	 */
-	public Object visit(ASTIfMoreTerms node, Object data,
-			InferenceEngine engine) throws SemanticException {
+	public Object visit(ASTIfMoreTerms node, Object data, InferenceEngine engine)
+			throws SemanticException {
 		LoggerGenerator.debug(indentString() + node);
 		indent += 2;
 		data = node.childrenAccept(this, data, engine);
@@ -315,8 +315,8 @@ public class Parser_1DumpVisitor implements Parser_1Visitor {
 	 * @see JJTREE.Parser_1Visitor#visit(JJTREE.ASTListOfFacts,
 	 * java.lang.Object)
 	 */
-	public Object visit(ASTListOfFacts node, Object data,
-			InferenceEngine engine) throws SemanticException {
+	public Object visit(ASTListOfFacts node, Object data, InferenceEngine engine)
+			throws SemanticException {
 		LoggerGenerator.debug(indentString() + node);
 		indent += 2;
 		data = node.childrenAccept(this, data, engine);
@@ -345,8 +345,8 @@ public class Parser_1DumpVisitor implements Parser_1Visitor {
 	 * @see JJTREE.Parser_1Visitor#visit(JJTREE.ASTListOfRules,
 	 * java.lang.Object)
 	 */
-	public Object visit(ASTListOfRules node, Object data,
-			InferenceEngine engine) throws SemanticException {
+	public Object visit(ASTListOfRules node, Object data, InferenceEngine engine)
+			throws SemanticException {
 		LoggerGenerator.debug(indentString() + node);
 		indent += 2;
 		data = node.childrenAccept(this, data, engine);
@@ -433,8 +433,8 @@ public class Parser_1DumpVisitor implements Parser_1Visitor {
 	 * 
 	 * @see JJTREE.Parser_1Visitor#visit(JJTREE.ASTThenFactor, java.lang.Object)
 	 */
-	public Object visit(ASTThenFactor node, Object data,
-			InferenceEngine engine) throws SemanticException {
+	public Object visit(ASTThenFactor node, Object data, InferenceEngine engine)
+			throws SemanticException {
 		LoggerGenerator.debug(indentString() + node);
 		indent += 2;
 		data = node.childrenAccept(this, data, engine);
@@ -791,8 +791,8 @@ public class Parser_1DumpVisitor implements Parser_1Visitor {
 	 * br.ufal.tci.JJTREE.Parser_1Visitor#visit(br.ufal.tci.JJTREE.ASTFloatPoint
 	 * , java.lang.Object, br.ufal.tci.InferenceEngine.InferenceEngineIF)
 	 */
-	public Object visit(ASTFloatPoint node, Object data,
-			InferenceEngine engine) throws SemanticException {
+	public Object visit(ASTFloatPoint node, Object data, InferenceEngine engine)
+			throws SemanticException {
 		LoggerGenerator.debug(indentString() + node);
 		indent += 2;
 		data = node.childrenAccept(this, data, engine);
@@ -808,6 +808,16 @@ public class Parser_1DumpVisitor implements Parser_1Visitor {
 	 * , java.lang.Object, br.ufal.tci.InferenceEngine.InferenceEngineIF)
 	 */
 	public Object visit(ASTStringLiteral node, Object data,
+			InferenceEngine engine) throws SemanticException {
+		LoggerGenerator.debug(indentString() + node);
+		indent += 2;
+		data = node.childrenAccept(this, data, engine);
+		indent -= 2;
+		return data;
+	}
+
+	@Override
+	public Object visit(ASTMethodInvocation node, Object data,
 			InferenceEngine engine) throws SemanticException {
 		LoggerGenerator.debug(indentString() + node);
 		indent += 2;
