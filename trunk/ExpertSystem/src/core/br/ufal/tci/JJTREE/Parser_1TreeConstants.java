@@ -52,9 +52,10 @@ public interface Parser_1TreeConstants
   public int JJTFACTDECLARATION = 46;
   public int JJTLISTOFFACTS = 47;
   public int JJTFACT = 48;
-  public int JJTTHENINCLUSIVEOPERATOR = 49;
-  public int JJTTHENATTRIBUTION = 50;
-  public int JJTPROGRAM = 51;
+  public int JJTMETHODINVOCATION = 49;
+  public int JJTTHENINCLUSIVEOPERATOR = 50;
+  public int JJTTHENATTRIBUTION = 51;
+  public int JJTPROGRAM = 52;
 
 
   public String[] jjtNodeName = {
@@ -107,6 +108,7 @@ public interface Parser_1TreeConstants
     "FactDeclaration",
     "ListOfFacts",
     "Fact",
+    "MethodInvocation",
     "ThenInclusiveOperator",
     "ThenAttribution",
     "Program",
