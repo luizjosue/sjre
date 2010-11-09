@@ -1,0 +1,26 @@
+variable:
+	string : z
+	int: h, n, g, m, a, c
+
+fact:
+	a = 10
+	g > 60
+	/*m != 765
+	n = 15
+	z ="teste"*/
+	//a = new Foobar()
+
+rule:
+	if /*(a > 20) or (h = 0) and*/ ((tmp:=a+h) > 2) and (tmp < 15)
+	then h = 123
+	
+	if ((tmp:=6)>5)//((tmp:=10+1)>2)
+	then h = 10
+	
+	if h >= 123
+	then a = 200
+	if (a>200) or (h>100)
+	then h = 500
+	
+	/*if ((c>15) and (b>15)) or m:= 25
+	then ml = ((569) + 12*5)*/
